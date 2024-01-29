@@ -1,0 +1,41 @@
+[data-url="/power/"] {
+  position: relative;
+  #webcamVideo {
+    margin: 0 auto;
+    width: 150px;
+    height: auto;
+    background: #6f6f6f;
+  }
+}
+
+form{
+  box-shadow: none;
+}
+
+video {
+  width: 90%;
+  max-height: 300px;
+  border-radius: 1rem;
+  object-fit: cover;
+  box-shadow: var(--box-shadow);
+}
+
+[data-source="webcam"] {
+  position: fixed;
+  bottom: 20px;
+  right: 15px;
+  max-width: 250px;
+  width: 30%;
+  max-height: 200px;
+}
+
+.call-actions {
+  margin-top: 2rem;
+}
+
+@media only screen and (max-width: 600px) {
+  [data-source="webcam"] {
+    bottom: 70px;
+    right: 10px;
+  }
+}

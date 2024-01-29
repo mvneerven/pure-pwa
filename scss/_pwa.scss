@@ -1,0 +1,36 @@
+/*
+  Reserved for PWA-specfic CSS entries, such as needed for window-controls-overlay (manifest) 
+*/
+
+// #hamburger {
+//   position: fixed;
+//   left: env(titlebar-area-x, 0);
+//   top: env(titlebar-area-y, 0);
+//   height: env(titlebar-area-height, 50px);
+//   width: env(titlebar-area-width, 100%);
+//   -webkit-app-region: drag;
+// }
+
+
+.pwa-install {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  display: none;
+  width: 48px;
+  height: 48px;
+  padding: .8rem .6rem .1rem .4rem;
+  --icon-fill: white;
+  background-color: var(--color-button-face-primary);
+  box-shadow: var(--box-shadow);
+  border-radius: 100%;
+  z-index: 7;
+  transition: none;
+  animation: slide-from-right .3s ease-out;
+}
+
+@media only screen and (max-width: 600px) {
+  .pwa-install {
+    bottom: 65px;
+  }
+}

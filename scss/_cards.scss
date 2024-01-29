@@ -1,0 +1,30 @@
+.cards {
+  list-style: none;
+  display: grid;
+  grid-auto-flow: dense;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-template-rows: repeat(3, 1fr);
+
+  >* {
+    width: 100%;
+    border-radius: 1rem;
+    height: 180px;
+    padding: 2rem 2rem .4rem 1rem;
+    display: flex;
+    align-items: flex-end;
+    flex-direction: row;
+    justify-content: center;
+    box-shadow: var(--box-shadow);
+    
+  }
+
+  >a:link,
+  >a:visited {
+    font-variant: small-caps;
+    text-transform: lowercase;
+    font-weight: 400;
+    color: var(--color-accent);
+  }
+
+}

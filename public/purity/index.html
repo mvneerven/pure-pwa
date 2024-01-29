@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" data-color-scheme="dark" data-url="/purity/">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Purity - PurePWA</title>
+  <link rel="stylesheet" href="../assets/css/app.css" />
+  <script defer type="module" src="../assets/js/app.js"></script>
+  <meta name="view-transition" content="same-origin" />
+  <meta name="theme-color" content="#444444" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#872e4e" media="(prefers-color-scheme: light)">
+</head>
+
+<body>
+  <div class="app-container">
+    <header>
+      <span class="title">
+        <h1>Purity Matters</h1>
+        <h2>Pure Modern Web</h2>
+      </span>
+
+      <app-menu> </app-menu>
+    </header>
+    <main>
+      <article>
+
+        <p>
+          The <em>PurePWA</em> radical <em>nothing-but-web-standards</em> approach has nothing but advantages:
+        </p>
+
+        <accordion-details>
+          <ul>
+            <li>
+              <details>
+                <summary>All the Standard PWA Benefits</summary>
+                <ul>
+                  <li><a target="_blank" rel="noopener"
+                      href="https://medium.com/@julianneagu/pwa-benefits-cost-effective-alternative-to-native-apps-in-2024-a6aea92467ca">Cost-effectiveness</a>
+                  </li>
+                  <li><a target="_blank" rel="noopener"
+                      href="https://kevinbasset.medium.com/dont-upload-your-pwa-to-the-app-stores-a4279a7d6eff">No App
+                      Store Mediators</a></li>
+                  <li><a target="_blank" rel="noopener" href="https://www.gomage.com/blog/pwa-offline/">Offline</a>
+                    Functionality</li>
+                  <li><a target="_blank" rel="noopener"
+                      href="https://scandiweb.com/blog/progressive-web-apps-and-seo/">SEO Benefits</a></li>
+                  <li><a
+                      href="https://medium.com/@julianneagu/progressive-web-app-pwa-statistics-2023-46950788b513">Lower
+                      Bounce Rates</a></li>
+                  <li>Faster Installation</li>
+                  <li>Cross-Platform Compatibility</li>
+                  <li>Near-Native Capabilities</li>
+                  <li>Ease of Development - just another Web App</li>
+                  <li>Accessibility</li>
+                  <li>Effort &amp; Cost Savings, due to <em>Single Codebase</em></li>
+                  <li>Automatic Updates</li>
+                  <li>Much lower Data Consumption than a Native App</li>
+                </ul>
+              </details>
+            </li>
+
+            <li>
+              <details>
+                <summary>Hybrid MPA/SPA Benefits</summary>
+                <ul>
+                  <li>Extra SEO-friendly, due to having multiple pages that can be indexed separately</a></li>
+                  <li>Much less client-side JavaScript rendering</li>
+                  <li>Page-specific code is automatically loaded only when needed, without the complexity introduced in
+                    SPA apps (such as tree-shaking, bundle-splitting &amp; lazy-loading)</li>
+                  <li>Ideal for Server-side Rendering and <a rel="noopener" target="_blank"
+                      href="https://jamstack.org/">JAMStack</a> frameworks</li>
+                  <li>Extremely scalable MPA model</li>
+                  <li>Shared Web Components for app-wide or multi-use functionality/styling</li>
+                  <li>SPA behavior where appropriate, using native <em>Navigator.navigate</em> event interception</li>
+                  <li>MPA page loads optimized using background caching</li>
+                  <li>Extremely Discoverable</li>
+                </ul>
+              </details>
+            </li>
+
+            <li>
+              <details>
+                <summary>Native Experience</summary>
+                <ul>
+
+                  <li>Functional <span class="color-change">micro-animations</span></li>
+                  <li><a rel="noopener" target="_blank"
+                      href="https://css-tricks.com/practical-css-scroll-snapping/">Scroll-snapping</a></li>
+                  <li><a rel="noopener" target="_blank"
+                      href="https://www.smashingmagazine.com/2023/12/view-transitions-api-ui-animations-part1/">View
+                      transitions</a></li>
+                  <li>Title bar subclassed using the <a rel="noopener" target="_blank"
+                      href="https://learn.microsoft.com/en-us/microsoft-edge/progressive-web-apps-chromium/how-to/window-controls-overlay">Window
+                      Controls Overlay API</a></li>
+                  <li>PWA <a rel="noopener" target="_blank" href="https://web.dev/articles/app-shortcuts">Shortcuts</a>
+                  </li>
+                  <li>Mobile-first, responsive design</li>
+                  <li>Using CSS Grid + Flex</li>
+                  <li>No concessions on Mobile - <em>Touch-friendly, Bottom Menu</em></li>
+                  <li>Media queries only when nothing else works.</li>
+                  <li>Highest possible Performance (Lighthouse, Core Web Vitals)</li>
+                </ul>
+              </details>
+
+            </li>
+
+            <li>
+              <details>
+                <summary>No Dependencies</summary>
+                <ul>
+                  <li>No framework, and not a single library. Just the <em>Pure, Native Web</em></li>
+                  <li>Leveraging the rich set of Native Capabilities the Modern Web has to offer, such as CSS
+                    animations/transitions</li>
+                  <li>Simple, easy to understand <em>CustomElement</em> base class</li>
+                  <li><a rel="noopener" target="_blank"
+                      href="https://dev.to/fly/make-your-own-state-management-for-react-with-proxies-1n0m">Native State
+                      Management using Proxy</a> and Custom DOM Events</li>
+                </ul>
+              </details>
+
+            </li>
+            <li>
+              <details>
+                <summary>No Build, No Bundling</summary>
+                <ul>
+                  <li>Using only <a rel="noopener" target="_blank"
+                      href="https://betterprogramming.pub/back-to-the-future-with-es-modules-js-without-build-ee2c207a4439">Runtime
+                      ES Imports.</a></li>
+                  <li>No framework-bloat</li>
+                  <li>No <a rel="noopener" target="_blank"
+                      href="https://blog.appsignal.com/2020/04/09/ride-down-the-javascript-dependency-hell.html">NPM
+                      dependency hell</a></li>
+                  <li>Much smaller, native pieces of JavaScript loaded only when needed</li>
+                </ul>
+              </details>
+            </li>
+
+            <li>
+              <details>
+                <summary>Developer-Friendly</summary>
+                <ul>
+                  <li>Highly discoverable, easily readable code, so <em>easy onboarding</em></li>
+                  <li>Using ES Modules that can be shared across pages, or isolated to MPA page scope</li>
+                  <li>Each MPA route has its own HTML, CSS and JavaScript (in a separate folder)</li>
+                  <li>Using <a rel="noopener" target="_blank"
+                      href="https://codewithsuraj.medium.com/benefits-of-semantic-elements-922c84bcfa65">Semantic HTML
+                      Structures</a> that show meaning/intention to developers</li>
+                  <li><em>Zero Setup</em>. No NPM, no Transpiling, no Bundling. Just start a Web Server on
+                    <code>/public/</code>
+                  </li>
+                </ul>
+              </details>
+            </li>
+
+            <li>
+              <details>
+                <summary>SVG Sprite Sheets</summary>
+                <ul>
+                  <li>A single <a rel="noopener" target="_blank"
+                      href="https://medium.com/@hayavuk/complete-guide-to-svg-sprites-7e202e215d34">SVG Sprite Sheet</a>
+                    file</li>
+                  <li>Multiple Reusable Symbols defined</li>
+                  <li>No need for Glyph Web Fonts that need building</li>
+                  <li>Much more efficient than having individual Icon Images</li>
+                </ul>
+              </details>
+
+            </li>
+
+
+            <li>
+              <details>
+                <summary>Future-proof</summary>
+                <ul>
+                  <li>No dependencies on Third-Party Frameworks means <a rel="noopener" target="_blank"
+                      href="https://www.linkedin.com/feed/update/urn:li:activity:7156656837457510400/">no externally
+                      inflicted Tech Debt</a></li>
+                  <li>The Web will always be <em>Backwards Compatible</em></li>
+                  <li><a rel="noopener" target="_blank"
+                      href="https://inxu.online/progressive-enhancement-strategies-building-resilient-web-experiences/">Progressive
+                      Enhancement</a> can fill gaps but may be removed over time</li>
+
+                </ul>
+              </details>
+
+            </li>
+          </ul>
+        </accordion-details>
+      </article>
+
+    </main>
+    <footer>
+      <message-toaster></message-toaster>
+    </footer>
+  </div>
+</body>
+
+</html>

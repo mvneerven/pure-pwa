@@ -1,0 +1,39 @@
+range-switch {
+
+  input[type="range"] {
+    appearance: none;
+    width: 3rem;
+    height: 1.2rem;
+    background: var(--color-surface-mixed-100);
+    outline: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: .2s ease-in-out;
+    padding: 0;
+
+    &:focus {
+      outline: 2px solid var(--color-accent);
+    }
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 1.4rem;
+      height: 1.4rem;
+      background: var(--color-accent);
+      filter: saturate(0);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: .2s ease-in-out;
+    }
+  }
+
+  &[value="1"] {
+    input[type="range"] {
+      &::-webkit-slider-thumb {
+        filter: none
+      }
+    }
+  }
+
+}

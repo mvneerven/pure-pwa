@@ -1,0 +1,27 @@
+{
+  "extends": [
+    "development"
+  ],
+  "hints": {
+    "apple-touch-icons": "off",
+    "compat-api/css": [
+      "default",
+      {
+        "ignore": [
+          "accent-color",
+          "-webkit-tap-highlight-color",
+          "backdrop-filter"
+        ]
+      }
+    ],
+    "manifest-is-valid": "off",
+    "compat-api/html": [
+      "default",
+      {
+        "ignore": [
+          "meta[name=theme-color]"
+        ]
+      }
+    ]
+  }
+}

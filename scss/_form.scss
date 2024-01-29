@@ -1,0 +1,147 @@
+input,
+button,
+textarea {
+  //margin-left: 1rem;
+  margin-top: .5rem;
+  outline: 0;
+  padding: 0.7rem 1.1rem;
+  border-radius: 0.4rem;
+  background-color: var(--color-surface-000);
+  color: var(--color-primary-100);
+  border: 0;
+
+  &:focus,
+  &:active {
+    outline: 2px solid var(--color-input-outline);
+    filter: brightness(110%);
+  }
+
+  &:hover {
+    filter: brightness(105%);
+    outline: 2px solid var(--color-input-outline-hover);
+  }
+}
+
+button {
+  background: var(--color-surface-500);
+  text-transform: uppercase;
+
+  &.cta {
+    //color: var(--color-accent);
+    //outline: 2px solid var(--color-accent);
+    background-color: var(--color-button-face-primary);
+    color: var(--color-button-primary);
+    --icon-fill: var(--color-button-primary);
+  }
+}
+
+form {
+  position: relative;
+  margin: 1rem;
+  padding: 2rem;
+  //background-color: rgba(var(--color-surface-mixed-100),.5);
+  border-radius: 2rem;
+  border: 2px solid rgba(var(--color-surface-100), 1);
+
+  legend {
+    text-transform: uppercase;
+  }
+
+  fieldset {
+    border: 0;
+  }
+
+  label {
+    position: relative;
+    font-size: smaller;
+    padding: 0.4rem;
+    margin-bottom: 0rem;
+    display: grid;
+    grid-template-columns: 27% 1fr;
+    align-items: center;
+
+    >span[data-label] {
+      display: inline-block;
+      text-align: right;
+      vertical-align: super;
+      margin-right: 1rem;
+    }
+
+    &:has([required])>span::after {
+      content: "*";
+      position: absolute;
+      color: var(--color-accent);
+      top: 20%;
+    }
+  }
+
+  .form-buttons {
+    margin-top: 1rem;
+    clear: both;
+    display: block;
+    text-align: right;
+
+    a.button {
+      display: inline-block;
+      color: var(--color-primary-100) !important;
+      font-weight: normal;
+    }
+
+
+    button,
+    .button {
+      position: relative;
+      text-transform: uppercase;
+      padding: .8rem 1.8rem .8rem .8rem;
+      padding-left: 36px;
+      border-radius: 1rem;
+      line-height: 1.4rem;
+
+      &:not(.cta) {
+        background-color: transparent;
+      }
+
+      svg.icon {
+        position: absolute;
+        left: .5rem;
+        top: 21%;
+        color: var(--color-accent, #ddd);
+        height: 80%;
+      }
+    }
+  }
+}
+
+.radio-buttons {
+  input[type=radio] {
+    position: absolute;
+    opacity:  0;
+  }
+
+  label {
+    display: inline-block;
+
+    &:has(input:checked) {
+      outline: 2px solid var(--color-accent);
+      border-radius: .5rem;
+    }
+
+    > [data-label] {
+      text-align: center;
+      display: contents;
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  form {
+    margin: 0;    
+    padding: 1rem;
+    border-radius: 1rem;
+ 
+    input,
+    textarea {
+      margin-left: 1rem;
+    }
+  }
+}

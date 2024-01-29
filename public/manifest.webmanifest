@@ -1,0 +1,40 @@
+{
+  "short_name": "PurePWA",
+  "name": "PurePWA - Power & Purity",
+  "description": "PurePWA is boilerplate for a #modernweb, #nobuild, #noframework, #norouter, #vanilla, MDA #PWA",
+  "display_override": [
+    "window-controls-overlay"
+  ],
+  "display": "standalone",
+  "orientation": "any",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/assets/img/pure-pwa-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/img/pure-pwa-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Videochat",
+      "url": "/action/",
+      "description": "Peer video chat"
+    },
+    {
+      "name": "About",
+      "url": "/about/",
+      "description": "Show app details"
+    }
+  ],
+  "start_url": "/?standalone=true",
+  "theme_color": "#abb3b7",
+  "background_color": "#191919"
+}

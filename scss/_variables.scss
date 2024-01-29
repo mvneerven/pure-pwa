@@ -1,0 +1,100 @@
+:root {
+
+  /* LIGHT MODE */
+
+  /** CSS LIGHT THEME PRIMARY COLORS */
+  --color-primary-000: #000000;
+  --color-primary-100: #121212;
+  --color-primary-200: #282828;
+  --color-primary-300: #3f3f3f;
+  --color-primary-400: #575757;
+  --color-primary-500: #717171;
+  --color-primary-600: #8b8b8b;
+
+  /** CSS LIGHT THEME SURFACE COLORS */
+  --color-surface-000: #ffffff;
+  --color-surface-100: #dddddd;
+  --color-surface-200: #e1e1e1;
+  --color-surface-300: #e4e4e4;
+  --color-surface-400: #e8e8e8;
+  --color-surface-500: #ececec;
+  --color-surface-600: #f0f0f0;
+
+  /** CSS LIGHT THEME MIXED SURFACE COLORS */
+  --color-surface-mixed-000: #d2d2d2;
+  --color-surface-mixed-100: #a8a8a8;
+  --color-surface-mixed-200: #949494;
+  --color-surface-mixed-300: #808080;
+  --color-surface-mixed-400: #6c6c6c;
+  --color-surface-mixed-500: #595959;
+  --color-surface-mixed-600: #474747;
+
+  --color-accent: #215fe6;
+  --color-accent-soft: #7a99dc;
+
+  --color-button-primary: #ffffff;
+  --skeleton-shine: .8;
+  --color-shadow: rgba(0, 0, 0, .3);
+
+  /* DARK MODE */
+  &[data-color-scheme="dark"] {
+
+    /** CSS DARK THEME PRIMARY COLORS */
+    --color-primary-000: #ffffff;
+    --color-primary-100: #dddddd;
+    --color-primary-200: #e1e1e1;
+    --color-primary-300: #e4e4e4;
+    --color-primary-400: #e8e8e8;
+    --color-primary-500: #ececec;
+    --color-primary-600: #f0f0f0;
+
+    /** CSS DARK THEME SURFACE COLORS */
+    --color-surface-000: #000000;
+    --color-surface-100: #121212;
+    --color-surface-200: #282828;
+    --color-surface-300: #3f3f3f;
+    --color-surface-400: #575757;
+    --color-surface-500: #717171;
+    --color-surface-600: #8b8b8b;
+
+    /** CSS DARK THEME MIXED SURFACE COLORS */
+    --color-surface-mixed-000: #282828;
+    --color-surface-mixed-100: #474747;
+    --color-surface-mixed-200: #595959;
+    --color-surface-mixed-300: #6c6c6c;
+    --color-surface-mixed-400: #808080;
+    --color-surface-mixed-500: #949494;
+    --color-surface-mixed-600: #a8a8a8;
+
+    --skeleton-shine: .05;
+    --color-accent: #d3490e;
+    --color-accent-soft: #cb896c;
+
+    --color-button-primary: #ffffff;
+    --color-shadow: rgba(0, 0, 0, .5);
+  }
+
+  /* CSS Gradient */
+  --color-gradient-l-1: linear-gradient(0deg, var(--color-surface-100), var(--color-surface-200), var(--color-surface-300), var(--color-surface-400), var(--color-surface-500));
+  --color-gradient-l-2: linear-gradient(90deg, var(--color-surface-100), var(--color-surface-200), var(--color-surface-300), var(--color-surface-400), var(--color-surface-500));
+  --color-gradient-l-3: linear-gradient(180deg, var(--color-surface-100), var(--color-surface-200), var(--color-surface-300), var(--color-surface-400), var(--color-surface-500));
+  --color-gradient-l-4: linear-gradient(270deg, var(--color-surface-100), var(--color-surface-200), var(--color-surface-300), var(--color-surface-400), var(--color-surface-500));
+  --color-gradient-l-5: linear-gradient(45deg, var(--color-surface-100), var(--color-surface-200), var(--color-surface-300));
+  --color-gradient-l-6: linear-gradient(135deg, var(--color-surface-100), var(--color-surface-200), var(--color-surface-300), var(--color-surface-400), var(--color-surface-500));
+  --color-gradient-l-7: linear-gradient(225deg, var(--color-surface-100), var(--color-surface-200), var(--color-surface-300), var(--color-surface-400), var(--color-surface-500));
+  --color-gradient-l-8: linear-gradient(315deg, var(--color-surface-100), var(--color-surface-200), var(--color-surface-300), var(--color-surface-400), var(--color-surface-500));
+  --color-gradient-r-1: radial-gradient(var(--color-surface-100), var(--color-surface-200), var(--color-surface-300), var(--color-surface-400), var(--color-surface-500));
+
+  --transition-duration: 0.2s;
+  --border-radius: .5rem;
+  --extra-brightness: 120%;
+  --dimmed-brightness: 70%;
+  --box-shadow: 0px 0px 15px var(--color-shadow);
+  --icon-fill: var(--color-primary-100);
+  --icon-stroke: transparent;
+  --color-button-face-primary: var(--color-accent);
+  --color-input-outline: var(--color-button-face-primary);
+  --color-input-outline-hover: var(--color-accent-soft);
+
+  --color-button-face: var(--color-surface-mixed-600);
+}

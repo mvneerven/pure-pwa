@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" data-color-scheme="dark" data-url="/power/">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Power - PurePWA</title>
+  <link rel="stylesheet" href="../assets/css/app.css" />
+  <script defer type="module" src="../assets/js/app.js"></script>
+  <script defer type="module" src="web-rtc.js"></script>
+  <meta name="view-transition" content="same-origin" />
+  <meta name="theme-color" content="#444444" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#872e4e" media="(prefers-color-scheme: light)">
+</head>
+
+<body>
+  <div class="app-container">
+    <header>
+      <span class="title">
+        <h1>PWA Powerrrr!</h1>
+        <h2>Little a PWA can't Do...</h2>
+      </span>
+
+      <app-menu> </app-menu>
+    </header>
+    <main>
+      <web-rtc>
+        <form>
+          <fieldset>
+            <video poster="../assets/img/video-cover.svg" data-cover="../assets/img/cover.svg" data-source="webcam"
+              autoplay playsinline muted></video>
+            <video poster="../assets/img/video-cover.svg" data-source="remote" autoplay playsinline muted></video>
+          </fieldset>
+          <fieldset class="call-actions">
+            <button type="button" data-purpose="share" class="cta">
+              <svg-icon icon="share"></svg-icon><span>Invite someone</span>
+            </button>
+          </fieldset>
+        </form>
+      </web-rtc>
+
+    </main>
+    <footer>
+      <message-toaster></message-toaster>
+    </footer>
+  </div>
+  
+</body>
+
+</html>

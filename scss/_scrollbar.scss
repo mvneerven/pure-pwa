@@ -1,0 +1,33 @@
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+
+  &-button {
+      width: 33px;
+      height: 33px;
+  }
+  &-thumb {
+      background: rgba(127, 127, 127, 0.5);
+      border-radius: 10rem;
+  }
+  &-thumb:hover {
+      background: rgba(127, 127, 127, 0.7);
+  }
+  &-thumb:active {
+      background: rgba(255, 255, 255, 0.6);
+  }
+  &-track {
+      background: rgba(0, 0, 0, 0.2);
+      border: 22px none rgba(255, 255, 255, 0.6);
+      border-radius: 50px;
+  }
+  &-track:hover {
+      background: rgba(0, 0, 0, 0.2);
+  }
+  &-track:active {
+      background: rgba(0, 0, 0, 0.2);
+  }
+  &-corner {
+      background: transparent;
+  }
+}

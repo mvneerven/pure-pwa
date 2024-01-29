@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" data-color-scheme="dark" data-url="/action/">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Action - PurePWA</title>
+  <link rel="stylesheet" href="/assets/css/app.css" />
+  <script defer type="module" src="../assets/js/app.js"></script>
+  <script defer type="module" src="./movies-api.js"></script>
+  <meta name="view-transition" content="same-origin" />
+  <meta name="theme-color" content="#444444" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#872e4e" media="(prefers-color-scheme: light)">
+  <meta name="description" content="Ultra-lean, webcomponents enhanced, nobuild boilerplate for PWAs" />
+</head>
+
+<body>
+  <div class="app-container">
+    <header>
+      <span class="title">
+        <h1>Action</h1>
+        <h2>Handling APIs</h2>
+      </span>
+
+      <app-menu> </app-menu>
+    </header>
+    <main>
+      <movies-api></movies-api>
+    </main>
+    <footer>
+      <message-toaster></message-toaster>
+    </footer>
+  </div>
+</body>
+
+</html>

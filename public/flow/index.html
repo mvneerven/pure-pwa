@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" data-color-scheme="dark" data-url="/flow/">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flow - PurePWA</title>
+  <link rel="stylesheet" href="../assets/css/app.css" />
+  <script defer type="module" src="../assets/js/app.js"></script>
+  <script defer type="module" src="todo-app.js"></script>
+  <meta name="view-transition" content="same-origin" />
+  <meta name="theme-color" content="#444444" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#872e4e" media="(prefers-color-scheme: light)">
+</head>
+
+<body>
+  <div class="app-container">
+    <header>
+      <span class="title">
+        <h1>Data Flow</h1>
+        <h2>State Management </h2>
+      </span>
+
+      <app-menu> </app-menu>
+    </header>
+    <main>
+      <todo-app id="todo-list">
+        <x-form>
+          <form method="post" action="/">
+            <fieldset class="horizontal">
+              <label>
+                <input data-x-update="submit" required name="task-name" type="text" placeholder="Describe new task..."
+                  minlength="5" />
+                <span hidden data-label>New task</span>
+              </label>
+              <button name="add-task" class="cta" type="submit">Add task</button>
+            </fieldset>
+
+            <h4>Current tasks:</h4>
+
+            <list-view name="todos" columns="title" bind="@todo-list.tasks"></list-view>
+          </form>
+        </x-form>
+      </todo-app>
+
+    </main>
+    <footer>
+      <message-toaster></message-toaster>
+    </footer>
+  </div>
+</body>
+
+</html>

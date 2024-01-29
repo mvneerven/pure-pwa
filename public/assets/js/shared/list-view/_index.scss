@@ -1,0 +1,75 @@
+list-view{
+  li {
+    margin-left: 0rem;
+    cursor: pointer;
+    clear: both;
+    display: grid;
+    grid-template-columns: 1fr 3rem;
+    align-items: baseline;
+        
+    padding: .5rem 1rem;
+    border: 1px solid var(--color-surface-500);
+    background-color: var(--color-surface-100);
+    border-radius: .5rem;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+     
+
+    input[type="checkbox"]{
+      display: none;
+    }
+
+    input[type="checkbox"]:checked ~ span {
+      text-decoration: line-through;
+      opacity: .5;
+    }
+
+    a {
+      &.del {
+        float: right;
+
+        &.del {
+          display: inline-block;
+          padding: .2rem .3rem;
+          font-size: 1.8rem;
+          color: coral;
+
+          &:hover {
+            color: var(--color-accent)
+          }
+        }
+      }
+
+      &[href="task-detail"] {
+        text-decoration: none;
+        color: unset;
+        padding: .2rem .2rem;
+        margin-bottom: 1rem;
+        font-weight: normal;
+        display: inline-block;
+        width: 100%;
+        border-radius: .5rem;
+
+        &:active,
+        &:focus-visible {
+          outline: 1px solid var(--color-accent);
+        }
+      }
+    }
+
+    &.done {
+      text-decoration: line-through;
+      opacity: .5;
+    }
+
+    &.new {
+      color: var(--color-accent);
+      animation: fade-in-move .2s ease-in-out;
+      transition: all .1s ease;
+    }
+
+    &.deleting {
+      animation: slide-to-left .2s ease-in-out;
+    }
+  }
+}

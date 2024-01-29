@@ -1,0 +1,41 @@
+todo-app {
+  input[name="task-name"] {
+    width: 100%;
+    padding: 1.15rem 1rem;
+    margin-left: 0;
+    font-size: 1.1rem;
+
+  }
+
+  fieldset.horizontal {
+    display: grid;
+    grid-template-columns: calc(100% - 8rem) 8rem;
+    align-items: center;
+
+    label {
+      display: inline;
+    }
+
+    button {
+      height: 3.5rem;
+    }
+  }
+
+  h4 {
+    margin-left: 0rem;
+    font-size: 2rem;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  span[data-label] {
+    display: none !important;
+  }
+
+  .del{
+    &:hover{
+      color: var(--color-accent)
+    }
+
+  }
+}

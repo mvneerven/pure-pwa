@@ -1,0 +1,124 @@
+#hamburger {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  a {
+    color: var(--color-primary-100);
+
+    >span {
+      display: none;
+    }
+  }
+}
+
+#app-menu {
+  display: none;
+  z-index: 11;
+  min-width: 100px;
+  padding: 0;
+  background-color: var(--color-surface-100);
+  border-radius: .5rem 0 .5rem .5rem;
+  box-shadow: var(--box-shadow);
+
+  a {
+    display: grid;
+    grid-template-columns: 35px 1fr;
+    white-space: nowrap;
+    overflow-x: hidden;
+    padding: .2rem .5rem;
+    color: var(--color-primary-100);
+    font-weight: normal;
+
+    >span {
+      display: inline-block;
+      vertical-align: super;
+      margin-top: 6px
+    }
+
+    &:hover {
+      background-color: var(--color-surface-500);
+    }
+
+    &:link,
+    &:visited {
+      text-decoration: none;
+    }
+
+  }
+
+  hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  &:target,
+  &.active {
+    display: block;
+    position: absolute;
+    top: 15px;
+    right: 13px;
+    animation: slide-from-right .2s ease
+  }
+}
+
+@media only screen and (max-width: 600px) {
+
+  #hamburger {
+    display: none;
+  }
+
+  /* compensate for bottom-menu height - for scroll down */
+  main {
+    padding-bottom: 70px;
+  }
+
+  hr {
+    border-left: 1px solid #000;
+    height: 1.2rem;
+  }
+
+  #app-menu {
+    border-radius: 0;
+    box-shadow: unset;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--color-surface-000);
+    color: var(--color-primary-100);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    transition: bottom 0.5s;
+    padding: 0;
+    padding-right: 0;
+
+    &.hide {
+      bottom: -80px;
+      transition: bottom .5s;
+    }
+
+    a {
+      padding: .2rem .9rem;
+      display: grid;
+      grid-template-columns: unset;
+      grid-template-rows: 24px 1fr;
+
+      >span {
+        display: block;
+        font-size: xx-small;
+        text-align: left;
+        margin-top: 0;
+      }
+
+
+    }
+
+    &:target,
+    &.active {
+      animation: unset
+    }
+  }
+}

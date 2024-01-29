@@ -1,0 +1,12 @@
+[data-form-element="styled-radio"] {
+  display: grid;
+  grid-template-columns: 27% 1fr;
+  gap: 5rem;
+
+  label {
+    display: inline-block;
+    text-align: center;
+    margin-right: .5rem;
+  }
+
+}

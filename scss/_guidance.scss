@@ -1,0 +1,54 @@
+dialog.guidance {
+  border-radius: 1rem;
+  min-width: 300px;
+  max-width: 80%;
+  min-height: 200px;
+  max-height: 75%;
+  background-color: var(--color-surface-400);
+  position: fixed;
+  margin: auto;
+  padding: 1rem;
+  box-shadow: 12px 12px 15px rgba(0, 0, 0, .4);
+  animation: fade-out .3s ease-out;
+
+  &[open] {
+    animation: fade-in-move .3s ease-out;
+  }
+
+  &::backdrop {
+    backdrop-filter: blur(3px);
+  }
+
+  ul {
+    margin-top: 1rem;
+    margin-left: 1rem;
+  }
+
+  h2{
+    margin-top: 0;
+    border-bottom: 2px solid var(--color-surface-mixed-400)
+  }
+
+  li {
+    list-style: circle;
+    margin-bottom: .5rem;
+  }
+
+  form {
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
+  }
+
+  button {
+    float: right;
+  }
+
+  .features {
+    font-size: smaller;
+  }
+
+  form{
+    box-shadow: none;
+  }
+}

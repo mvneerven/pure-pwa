@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" data-color-scheme="dark" data-url="/entry/">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forms - PurePWA</title>
+  <link rel="stylesheet" href="../assets/css/app.css" />
+  <script defer type="module" src="../assets/js/app.js"></script>
+  <meta name="view-transition" content="same-origin" />
+  <meta name="theme-color" content="#444444" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#872e4e" media="(prefers-color-scheme: light)">
+</head>
+
+<body>
+  <div class="app-container">
+    <header>
+      <span class="title">
+        <h1>Data Entry</h1>
+        <h2>Forms &amp; Controls</h2>
+      </span>
+
+      <app-menu> </app-menu>
+    </header>
+    <main>
+      <x-form dirty-check debug>
+        <form method="post" action="/login">
+
+          <fieldset>
+            <legend>Sign up</legend>
+            <label><span data-label>Email:</span>
+              <input required placeholder="Enter email address" name="email" type="email" /></label>
+            <label><span data-label>Name:</span>
+              <input required placeholder="Enter screen name" name="screen-name" type="text" minlength="5" /></label>
+
+            <dropdown-list>
+              <label><span data-label>Language:</span>
+                <input locked type="text" list="languages" name="language" />
+                <datalist id="languages"
+                  data-source="https://gist.githubusercontent.com/jrnk/8eb57b065ea0b098d571/raw/936a6f652ebddbe19b1d100a60eedea3652ccca6/ISO-639-1-language.json"
+                  data-field="name">
+
+                </datalist>
+              </label>
+            </dropdown-list>
+
+            <label><span data-label>Birthdate:</span>
+              <input placeholder="Enter birthdate" name="birthdate" type="date" min="1910-01-01" /></label>
+
+          </fieldset>
+
+          <fieldset class="form-buttons">
+
+            <a class="button" href="/">Cancel</a>
+
+            <button class="cta" type="submit" name="sign-up">
+              <svg-icon icon="login"></svg-icon> Continue sign-up
+            </button>
+
+
+          </fieldset>
+        </form>
+      </x-form>
+    </main>
+    <footer>
+      <message-toaster></message-toaster>
+    </footer>
+  </div>
+</body>
+
+</html>

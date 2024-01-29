@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" data-color-scheme="dark" data-url="/settings/">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Settings - PurePWA</title>
+  <link rel="stylesheet" href="../assets/css/app.css" />
+  <script defer type="module" src="../assets/js/app.js"></script>
+  <script defer type="module" src="settings-form.js"></script>
+  <meta name="view-transition" content="same-origin" />
+  <meta name="theme-color" content="#444444" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#872e4e" media="(prefers-color-scheme: light)">
+</head>
+
+<body>
+  <div class="app-container">
+    <header>
+      <span class="title">
+        <h1>
+          Settings
+        </h1>
+        <h2>
+          Configure App
+        </h2>
+      </span>
+      <app-menu> </app-menu>
+    </header>
+    <main>
+      <section id="settings-form">
+        <settings-form>
+          <x-form>
+            <form action="" method="post">
+              <legend>Settings</legend>
+              <fieldset>
+                <label data-form-element="styled-radio">
+                  <span data-label>Appearance</span>
+                  <span>
+                    <div class="radio-buttons" data-selected="@appearance">
+
+                      <label>
+                        <input autofocus type="radio" name="appearance" value="system-default"
+                          aria-label="Automatic/device mode" />
+                        <svg-icon icon="device"></svg-icon>
+                        <span data-label>System</span>
+                      </label>
+
+                      <label>
+                        <input type="radio" name="appearance" value="dark" />
+                        <svg-icon icon="night"></svg-icon>
+                        <span data-label>Dark</span>
+                      </label>
+
+                      <label>
+                        <input type="radio" name="appearance" value="light" aria-label="Light mode"  />
+                        <svg-icon icon="day"></svg-icon>
+                        <span data-label>Light</span>
+                      </label>
+                    </div>
+                  </span>
+                </label>
+                <range-switch>
+                  <label data-form-element="switch" data-selected="@useAnimations">
+                    <span data-label>Animation</span>
+                    <input type="range" min="0" max="1" name="animation" />
+                  </label>
+                </range-switch>
+              </fieldset>
+            </form>
+          </x-form>
+        </settings-form>
+      </section>
+    </main>
+    <footer>
+      <message-toaster></message-toaster>
+    </footer>
+  </div>
+</body>
+
+</html>

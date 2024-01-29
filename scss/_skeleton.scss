@@ -1,0 +1,27 @@
+// SHINING LOADING SKELETON
+
+.card.skeleton {
+	padding-bottom: 56.25%;
+	position: relative;
+	
+	// The shine that's going to move across the skeleton:
+	background-image:			
+			linear-gradient(
+				150deg, 
+				rgba(#fff, 0), 
+				rgba(#fff, var(--skeleton-shine)),
+				rgba(#fff, 0)
+			);
+	background-size: 200% 200%; // width of the shine
+	background-repeat: no-repeat; // No need to repeat the shine effect
+	background-position: 20% 20%; // Place shine on the left side, with offset on the left based on the width of the shine - see background-size
+	animation: shine 1s ease-out infinite; // increase animation time to see effect in 'slow-mo'
+}
+
+@keyframes shine {
+  0%   {background-position: 20% 0%;}
+  50%  {background-position: 40% 0%;}
+  50%  {background-position: 30% 10%;}
+  100%  {background-position: 20% 20%;}
+}
+

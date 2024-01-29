@@ -1,0 +1,178 @@
+html[data-use-animations="1"] {
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.3s;
+  }
+
+  @keyframes fade-in {
+    0% {
+      opacity: 0.1;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fade-in-move {
+    0% {
+      opacity: 0.1;
+      top: 50px;
+    }
+
+    35% {
+      opacity: 0.5;
+      top: 20px;
+    }
+
+    100% {
+      top: 0;
+      opacity: 1;
+    }
+  }
+
+  @keyframes fade-in {
+    0% {
+      opacity: 0
+    }
+  }
+
+  @keyframes fade-out {
+    to {
+      opacity: 0
+    }
+  }
+
+  @keyframes slide-from-right {
+    0% {
+      transform: translate(30px)
+    }
+  }
+
+  @keyframes slide-to-left {
+    to {
+      transform: translate(-30px)
+    }
+  }
+
+  @keyframes slide-up {
+    to {
+      transform: translateY(-30px)
+    }
+  }
+
+  @keyframes slide-down {
+    to {
+      transform: translateY(30px)
+    }
+  }
+
+  @keyframes color-change {
+
+    0%,
+    100% {
+      color: var(--color-primary-000);
+      border-bottom: 2px solid transparent
+    }
+
+    50% {
+      color: var(--color-accent);
+      border-bottom-color: var(--color-accent);
+    }
+  }
+
+  .fade-in {
+    animation: fade-in 0.2s linear;
+  }
+
+  .cards>* {
+    transition: all 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+
+    &:hover {
+      transform: scale(1.03);
+      transition: all 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    }
+  }
+
+  article {
+    p {
+      animation: fade-in-move 0.4s linear;
+    }
+  }
+
+  a:link,
+  button {
+    transition: all .2s ease;
+
+    &:hover {
+      transition: all .2s ease;
+    }
+  }
+
+
+  .skeleton {
+    :nth-child(1) {
+      animation-delay: 50ms
+    }
+
+    :nth-child(2n) {
+      animation-delay: 150ms
+    }
+
+    :nth-child(3n) {
+      animation-delay: 310ms
+    }
+
+    :nth-child(5n) {
+      animation-delay: 250ms
+    }
+
+    :nth-child(7n) {
+      animation-delay: 400ms
+    }
+
+    :nth-child(11n) {
+      animation-delay: 300ms
+    }
+
+    :nth-child(13n) {
+      animation-delay: 100ms
+    }
+  }
+
+  .fade-in {
+    :nth-child(1) {
+      animation-delay: 10ms
+    }
+
+    :nth-child(2n) {
+      animation-delay: 30ms
+    }
+
+    :nth-child(3n) {
+      animation-delay: 20ms
+    }
+
+    :nth-child(5n) {
+      animation-delay: 60ms
+    }
+
+    :nth-child(7n) {
+      animation-delay: 0ms
+    }
+
+    :nth-child(11n) {
+      animation-delay: 50ms
+    }
+
+    :nth-child(13n) {
+      animation-delay: 15ms
+    }
+  }
+
+  .color-change {
+    animation: color-change 3s ease-out infinite;
+  }
+
+}

@@ -1,0 +1,39 @@
+[data-url="/about/"] {
+  figure {
+    display: inline-block;
+    display: flex;
+    justify-content: center;
+
+    img {
+      width: 150px;
+      border-radius: 50%;
+      box-shadow: 1px 2px 3px rgba(0, 0, 0, .4);
+    }
+
+    figcaption {
+      display: block;
+      font-size: smaller;
+      font-style: italic;
+    }
+  }
+
+  .other-sources {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 2rem;
+
+    .icon {
+      width: 64px;
+      height: 64px;
+      padding: 1rem;
+      border: 2px solid var(--color-primary-100);
+      //background-color: var(--color-primary-500);
+      //--icon-fill: var(--color-accent);
+      box-shadow: var(--box-shadow);
+      border-radius: 100%;
+      
+    }
+  }
+}

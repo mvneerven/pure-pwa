@@ -1,0 +1,11 @@
+
+svg>* {
+  fill: var(--icon-fill);
+  stroke: var(--icon-stroke);
+}
+
+svg-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

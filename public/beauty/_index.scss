@@ -1,0 +1,135 @@
+.carousel {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+
+  article {
+    z-index: 0;
+    margin-bottom: 1rem;
+    margin-right: 1rem;
+    flex: none;
+
+    scroll-snap-align: start;
+
+    h2 {
+      margin-bottom: .3rem;
+      text-align: center;
+    }
+
+    figure {
+
+      img {
+        height: 50vh;
+
+        border-radius: 20px 20px;
+        border: 2px solid var(--color-primary-100);
+        object-fit: cover;
+      }
+
+      figcaption {
+        font-size: smaller;
+        text-align: center;
+      }
+    }
+
+    &.zoomed {
+      z-index: 7;
+
+      img {
+        position: fixed;
+        width: auto;
+        height: auto;
+
+        max-width: calc(100% - 20px);
+        max-height: calc(100% - 20px);
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        margin: auto;
+        overflow: auto;
+
+        object-fit: contain;
+        cursor: pointer;
+      }
+    }
+  }
+
+}
+
+
+html[data-use-animations="1"] {
+  .carousel {
+    article {
+      figure {
+        img {
+          transition: 0.5s ease;
+        }
+      }
+
+      &.zoomed {
+        img {
+          transition: .5s ease-in-out;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .carousel {
+    article {
+      figure {
+        img {
+          width: 80vw;
+        }
+      }
+    }
+  }
+}
+
+
+@media only screen and (min-width: 900px) {
+  .carousel {
+    article {
+      figure {
+        img {
+          max-width: 790px;
+        }
+      }
+    }
+  }
+}
+
+.full-screen {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  object-position: 50%;
+  background-color: var(--color-surface-000);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  opacity: 0;
+
+  text-align: center;
+  pointer-events: none;
+
+  &.show {
+    opacity: 1;
+
+    pointer-events: all;
+  }
+}
+
+html[data-use-animations="1"] {
+  .full-screen {
+    transition: all .2s;
+
+    &.show {
+      transition: all .2s;
+    }
+  }
+}

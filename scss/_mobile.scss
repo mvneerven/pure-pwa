@@ -1,0 +1,12 @@
+/*
+   Ensure tapping doesn't highlight in a default way
+*/
+
+input,
+textarea,
+button,
+select,
+li.collapsible,
+a {
+   -webkit-tap-highlight-color: transparent;
+}
