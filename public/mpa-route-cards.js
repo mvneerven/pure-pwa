@@ -12,7 +12,7 @@ customElements.define(
           e.preventDefault();
           e.target.classList.add("ripple");
           enQueue(() => {
-            location.href = `${url}`;
+            location.href = e.target.getAttribute("href");
           }, 50);
         }
       });
