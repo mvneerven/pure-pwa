@@ -9,9 +9,8 @@ customElements.define(
       this.state.todos = mockTodoAPI.load();
 
       this.addEventListener("state-change", (e) => {
-        if (e.detail.path === "/todos" || e.detail.path.startsWith("/todos/")) {
+        if (e.detail.path === "/todos" || e.detail.path.startsWith("/todos/"))
           mockTodoAPI.save(this.state.todos || []);
-        }
 
         if (e.detail.name === "x-form-data") {
           const value = e.detail.value;
@@ -33,10 +32,6 @@ customElements.define(
           }
         }
       });
-    }
-
-    get tasks() {
-      return this.state.todos;
     }
   }
 );

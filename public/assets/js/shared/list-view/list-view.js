@@ -36,7 +36,7 @@ customElements.define(
       });
       this.addEventListener("click", (e) => {
         const index = ListView.getIndex(e);
-        if (e.target.tagName === "BUTTON") 
+        if (e.target.tagName === "BUTTON")
           boundElement[boundProperty].splice(index, 1);
       });
     }
@@ -50,15 +50,15 @@ customElements.define(
     }
 
     render() {
-      if(this.listViewItems.length === 0)
-        return /*html*/`<em>No items yet</em>`
+      if (!this.listViewItems || this.listViewItems.length === 0)
+        return /*html*/ `<em>No items yet</em>`;
 
       const builder = new HTMLBuilder(/*html*/ `<ol>{html}</ol>`);
 
       for (let item of this.listViewItems) {
         builder.add(this.getItem(item));
       }
-      
+
       return builder.toHTML();
     }
 

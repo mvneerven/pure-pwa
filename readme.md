@@ -1,6 +1,6 @@
 # PurePWA - Power & Purity
 
-> PurePWA is a **Radical Experiment** in Simplifying Boilerplate for PWAs, in which we force ourselves to go to the very core of **The Modern Web**, and nothing else.
+> PurePWA is a **Radical Experiment** in Simplifying Boilerplate for PWAs, in which we force ourselves to only use the **Modern Web** standards, and nothing else.
 
 ![mobile-view.webp](./md/mobile-view.webp)
 
