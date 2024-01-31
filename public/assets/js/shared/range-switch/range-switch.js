@@ -1,4 +1,4 @@
-import { CustomElement, enQueue, parseHTML } from "../../common.js";
+import { CustomElement, enQueue } from "../../common.js";
 
 customElements.define(
   "range-switch",
@@ -22,7 +22,7 @@ customElements.define(
       };
 
       const range = this.querySelector('input[type="range"]');
-      
+
       range.addEventListener("input", (e) => {
         this.setAttribute("value", condition() ? 1 : 0);
       });

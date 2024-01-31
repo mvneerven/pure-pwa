@@ -45,6 +45,7 @@ html {
 body {
   margin: 0;
   overflow: hidden;
+  visibility: hidden; /* fix for ISSUE 1  */
 }
 
 main {

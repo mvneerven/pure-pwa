@@ -13,3 +13,5 @@ window.purePWA = new PurePWA(appSettings); // Launch main PWA controlling compon
 
 if (typeof navigator.serviceWorker !== "undefined")
   navigator.serviceWorker.register("/assets/js/services/sw.js");
+
+document.body.style.visibility = "visible" /* fix for ISSUE 1  */ ;
