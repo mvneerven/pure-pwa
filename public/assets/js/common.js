@@ -585,7 +585,10 @@ export class PurePWA {
     const URLs = Object.keys(this.settings.routes);
 
     for (const url of URLs) {
-      let baseUrl = new URL(url, window.location.href);
+      let baseUrl = new URL(
+        url,
+        `${window.location.protocol}//${window.location.host}`
+      );
 
       const response = await fetch(url);
       const doc = new DOMParser().parseFromString(
