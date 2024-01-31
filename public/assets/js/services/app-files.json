@@ -19,7 +19,6 @@
     "/assets/img/video-cover.svg",
     "/assets/js/services/app-files.json",
     "/assets/js/services/app-version.json",
-    "/assets/js/services/sw.js",
     "/assets/js/shared/accordion-details/accordion-details.js",
     "/assets/js/shared/app-menu/app-menu.js",
     "/assets/js/shared/dropdown-list/dropdown-list.js",
@@ -47,5 +46,6 @@
     "/index.html",
     "/manifest.webmanifest",
     "/mpa-route-cards.js",
-    "/robots.txt"
+    "/robots.txt",
+    "/service-worker.js"
 ]

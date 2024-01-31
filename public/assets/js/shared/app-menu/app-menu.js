@@ -72,7 +72,6 @@ customElements.define(
               anchor.setAttribute("disabled", "disabled");
             }
             break;
-          
         }
 
         if (window.location.host === new URL(anchor.href).host) {
@@ -113,10 +112,15 @@ customElements.define(
     }
 
     showGuidance() {
-      this.#helpDialog = parseHTML(
-        /*html*/ `<dialog class="guidance"></dialog>`
-      )[0];
-      document.body.appendChild(this.#helpDialog);
+      const createDialog = () => {
+        let dialog = parseHTML(
+          /*html*/ `<dialog class="guidance"></dialog>`
+        )[0];
+        document.body.appendChild(dialog);
+        return dialog;
+      };
+      this.#helpDialog =
+        document.querySelector("dialog.guidance") || createDialog();
 
       this.#helpDialog.innerHTML = /*html*/ `
       <form method="dialog">

@@ -34,3 +34,41 @@
     bottom: 65px;
   }
 }
+
+#sw-notification {
+  display: none;
+  cursor: pointer;
+  position: fixed;
+  bottom: 60px;
+  left: 0;
+  right: 0;
+  text-align: center;
+
+  &.show {
+    display: block;
+    animation: fade-in 1s ease-out;
+  }
+
+  >a {
+    display: inline-block;
+    padding: .2rem .5rem;
+    background-color: var(--color-surface-400);
+    box-shadow: var(--box-shadow);
+    color: var(--color-accent);
+    border-radius: .5rem;
+
+    >span {
+      display: inline-block;
+      vertical-align: super;
+      line-height: 32px;
+    }
+
+    >svg-icon {
+      --icon-fill: var(--color-accent);
+      display: inline-block;
+    }
+  }
+
+
+  //display: none;
+}

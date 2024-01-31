@@ -418,7 +418,6 @@ export class PurePWA {
     if (savedAppearance === Appearance.System) {
       this.colorScheme = appearanceSettings.theme;
       this.appearance = appearanceSettings.prefers;
-      
     } else {
       this.colorScheme = savedAppearance;
       this.appearance = savedAppearance;
@@ -431,6 +430,10 @@ export class PurePWA {
     enQueue(this.#addPWAInstallButton.bind(this), 5000);
 
     this.#handleMouseExceptions();
+
+    enQueue(this.#registerServiceWorker.bind(this));
+
+    document.body.style.visibility = "visible" /* fix for ISSUE 1  */;
   }
 
   #handleMouseExceptions() {
@@ -449,6 +452,67 @@ export class PurePWA {
     );
   }
 
+  async #registerServiceWorker() {
+    let newWorker,
+      refreshing = false;
+    const me = this;
+    if (typeof navigator.serviceWorker !== "undefined") {
+      const serviceWorkerNotification = parseHTML(
+        /*html*/
+        `<div title="Update available" id="sw-notification" >
+          <a id="reload"><svg-icon icon="rocket"></svg-icon><span>Update App</span></a>
+        </div>`
+      )[0];
+      serviceWorkerNotification.addEventListener("click", () => {
+        newWorker.postMessage({ action: "skipWaiting" });
+      });
+      document.body.appendChild(serviceWorkerNotification);
+
+      me.serviceWorker = await navigator.serviceWorker.register(
+        "/service-worker.js"
+      );
+      console.log("ServiceWorker registered", me.serviceWorker);
+
+      this.serviceWorker.addEventListener("updatefound", () => {
+        // An updated service worker has appeared in me.serviceWorker.installing!
+        newWorker = me.serviceWorker.installing;
+        newWorker.addEventListener("statechange", () => {
+          // Has service worker state changed?
+          switch (newWorker.state) {
+            case "installed":
+              // There is a new service worker available, show the notification
+              if (navigator.serviceWorker.controller) {
+                let notification = document.getElementById("sw-notification");
+                notification.className = "show";
+              }
+              break;
+          }
+        });
+      });
+
+      navigator.serviceWorker.addEventListener("controllerchange", () => {
+        if (!refreshing) {
+          window.location.reload();
+          refreshing = true;
+        }
+      });
+
+      self.addEventListener("message", function (event) {
+        if (event.data.action === "installed") {
+          localStorage.setItem("installed-version", event.data.version);
+
+          me.messageBus.dispatch("notification", {
+            // toaster
+            text: `New version installed: ${event.data.version}`
+          });
+        }
+      });
+    }
+  }
+
+  /**
+   * Detect user settings about dark mode preferences
+   */
   static detectAppearanceSettings() {
     const mm = window.matchMedia;
     if (window.matchMedia) {
@@ -487,10 +551,8 @@ export class PurePWA {
 
   set appearance(value) {
     document.documentElement.setAttribute("data-appearance", value);
-    if(value !== Appearance.System)
-      localStorage.setItem("appearance", value);
-    else
-      localStorage.removeItem("appearance");
+    if (value !== Appearance.System) localStorage.setItem("appearance", value);
+    else localStorage.removeItem("appearance");
   }
 
   set colorScheme(value) {
@@ -523,7 +585,7 @@ export class PurePWA {
     const URLs = Object.keys(this.settings.routes);
 
     for (const url of URLs) {
-      let baseUrl = url;
+      let baseUrl = new URL(url, window.location.href);
 
       const response = await fetch(url);
       const doc = new DOMParser().parseFromString(
@@ -532,9 +594,9 @@ export class PurePWA {
       );
       const cssLinks = Array.from(
         doc.querySelectorAll('link[rel="stylesheet"]')
-      ).map((link) => baseUrl + link.href);
+      ).map((link) => new URL(link.href, baseUrl).href);
       const jsScripts = Array.from(doc.querySelectorAll("script[src]")).map(
-        (script) => baseUrl + script.getAttribute("src")
+        (script) => new URL(script.getAttribute("src"), baseUrl).href
       );
       const allResources = [...cssLinks, ...jsScripts];
 
@@ -553,12 +615,10 @@ export class PurePWA {
     });
   }
 
+  /**
+   * This makes sure the app install button
+   */
   #addPWAInstallButton() {
-    /**
-     * This makes sure the app install button
-     * TODO: add install link with href="/install/"
-     *
-     */
     const btnAdd = parseHTML(
       /*html*/ `<a title="Install this PWA to your device" class="pwa-install" href="/install/"><svg-icon icon="rocket"></svg-icon></a>`
     )[0];
@@ -567,7 +627,7 @@ export class PurePWA {
     // Assuming the service worker registration is done elsewhere in your code
     navigator.serviceWorker.ready
       .then(function (registration) {
-        console.log("Service Worker ready");
+        console.log("Service Worker ready", registration);
         registration.active.postMessage({ command: "getDeferredPrompt" });
       })
       .catch(function (error) {

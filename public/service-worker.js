@@ -29,6 +29,8 @@ function initServiceWorker(app, appFileList) {
       (async () => {
         const cache = await caches.open(CACHE_NAME);
         cache.addAll(appFileList);
+
+        self.postMessage({ action: "installed", version: app.version });
       })()
     );
   });
@@ -37,7 +39,7 @@ function initServiceWorker(app, appFileList) {
   self.addEventListener("activate", (event) => {
     event.waitUntil(self.clients.claim());
   });
-  
+
   let deferredPrompt;
   self.addEventListener("beforeinstallprompt", (e) => {
     e.preventDefault();
@@ -46,5 +48,11 @@ function initServiceWorker(app, appFileList) {
 
   self.addEventListener("fetch", (event) => {
     event.respondWith(caches.match(event.request));
+  });
+
+  self.addEventListener("message", function (event) {
+    if (event.data.action === "skipWaiting") {
+      self.skipWaiting();
+    }
   });
 }
