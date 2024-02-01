@@ -1,4 +1,88 @@
 /**
+ * List of PolyFills to check for
+ */
+const POLYFILLS = {
+  navigation: {
+    isNeeded: () => {
+      return (
+        typeof window.navigation === "undefined" ||
+        !("navigate" in window.navigation)
+      );
+    },
+    install: () => {
+      const checkNavigationInterception = (url) => {
+        let interception;
+        const navigateEvent = new CustomEvent("navigate");
+
+        navigateEvent.destination = {
+          url: url
+        };
+        navigateEvent.intercept = (o) => {
+          if (o) interception = o;
+        };
+
+        window.navigation.dispatchEvent(navigateEvent);
+
+        navigateEvent.intercept();
+        if (interception) {
+          navigateEvent.interception = interception;
+        }
+        return navigateEvent;
+      };
+
+      window.navigation = new EventTarget();
+      const me = this;
+      document.addEventListener("click", (e) => {
+        if (e.target.href) {
+          let navigateEvent = checkNavigationInterception(e.target.href);
+
+          if (
+            navigateEvent.interception &&
+            typeof navigateEvent.interception.handler === "function"
+          ) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.history.pushState({}, "", navigateEvent.destination.url);
+            navigateEvent.interception.handler.bind(me).call();
+            window.addEventListener(
+              "popstate",
+              (event) => {
+                console.log(event);
+                let navigateEvent = checkNavigationInterception(
+                  window.location.href
+                );
+                if (
+                  navigateEvent.interception &&
+                  typeof navigateEvent.interception.handler === "function"
+                ) {
+                  navigateEvent.interception.handler.bind(me).call();
+                }
+              },
+              {
+                once: true
+              }
+            );
+          }
+        }
+      });
+    }
+  }
+};
+
+/**
+ * Run through list of PolyFills to install if needed.
+ */
+export function setupPolyFills() {
+  Object.keys(POLYFILLS).forEach((key) => {
+    if (POLYFILLS[key].isNeeded()) {
+      console.log("Installing polyfill", key);
+      POLYFILLS[key].install(key);
+    }
+  });
+}
+
+/**
  * Generates an HTML NodeList by parsing the given HTML string
  * @param {String} html
  * @returns {NodeListOf<ChildNode>} DOM element
