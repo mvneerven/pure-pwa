@@ -15,23 +15,30 @@ customElements.define(
         if (e.detail.name === "x-form-data") {
           const value = e.detail.value;
           if (value["task-name"]) {
-            // new task added
+            // User has submitted the form with a new task
             this.state.todos.push({
               title: value["task-name"],
               done: value["select-state"] === true
             });
 
             purePWA.messageBus.dispatch("notification", {
-              // toaster
               text: "Task added..."
             });
 
-            this.querySelector("[name='task-name']").value = ""; // empty after addition
+            // Clear New Task text field after addition
+            this.querySelector("[name='task-name']").value = "";
 
             mockTodoAPI.save(this.state.todos || []);
           }
         }
       });
+    }
+
+    /**
+     * Public property, linked to proxied state.
+     */
+    get tasks() {
+      return this.state.todos;
     }
   }
 );

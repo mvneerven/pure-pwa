@@ -427,7 +427,6 @@ export class PurePWA {
 
     enQueue(this.#loadECMAScriptModules.bind(this));
     enQueue(this.#cacheMPAInBackground.bind(this), 1000);
-    enQueue(this.#addPWAInstallButton.bind(this), 5000);
 
     this.#handleMouseExceptions();
 
@@ -453,61 +452,91 @@ export class PurePWA {
   }
 
   async #registerServiceWorker() {
+    if (typeof navigator.serviceWorker === "undefined") return;
+
     let newWorker,
       refreshing = false;
     const me = this;
-    if (typeof navigator.serviceWorker !== "undefined") {
-      const serviceWorkerNotification = parseHTML(
-        /*html*/
-        `<div title="Update available" id="sw-notification" >
-          <a id="reload"><svg-icon icon="rocket"></svg-icon><span>Update App</span></a>
+
+    const serviceWorkerNotification = parseHTML(
+      /*html*/
+      `<div title="Click to install new App version." id="sw-notification" >
+          <a id="reload"><svg-icon icon="rocket"></svg-icon><span>Update available</span></a>
         </div>`
-      )[0];
-      serviceWorkerNotification.addEventListener("click", () => {
-        newWorker.postMessage({ action: "skipWaiting" });
+    )[0];
+    serviceWorkerNotification.addEventListener("click", () => {
+      newWorker.postMessage({ action: "skipWaiting" });
+    });
+    document.body.appendChild(serviceWorkerNotification);
+
+    me.serviceWorker = await navigator.serviceWorker.register(
+      "/service-worker.js"
+    );
+    console.log("ServiceWorker registered", me.serviceWorker);
+
+    //me.serviceWorker.active.postMessage({command: 'getDeferredPrompt'});
+
+    this.serviceWorker.addEventListener("updatefound", () => {
+      // An updated service worker has appeared in me.serviceWorker.installing!
+      newWorker = me.serviceWorker.installing;
+      newWorker.addEventListener("statechange", () => {
+        // Has service worker state changed?
+        switch (newWorker.state) {
+          case "installed":
+            // There is a new service worker available, show the notification
+            if (navigator.serviceWorker.controller) {
+              let notification = document.getElementById("sw-notification");
+              notification.className = "show"; // Update available
+            }
+            break;
+        }
       });
-      document.body.appendChild(serviceWorkerNotification);
+    });
 
-      me.serviceWorker = await navigator.serviceWorker.register(
-        "/service-worker.js"
-      );
-      console.log("ServiceWorker registered", me.serviceWorker);
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (!refreshing) {
+        window.location.reload();
+        refreshing = true;
+      }
+    });
 
-      this.serviceWorker.addEventListener("updatefound", () => {
-        // An updated service worker has appeared in me.serviceWorker.installing!
-        newWorker = me.serviceWorker.installing;
-        newWorker.addEventListener("statechange", () => {
-          // Has service worker state changed?
-          switch (newWorker.state) {
-            case "installed":
-              // There is a new service worker available, show the notification
-              if (navigator.serviceWorker.controller) {
-                let notification = document.getElementById("sw-notification");
-                notification.className = "show";
-              }
-              break;
-          }
+    self.addEventListener("message", function (event) {
+      console.log("postMessage received", event);
+
+      if (event.data.action === "installed") {
+        localStorage.setItem("installed-version", event.data.version);
+
+        me.messageBus.dispatch("notification", {
+          // toaster
+          text: `New version installed: ${event.data.version}`
         });
-      });
+      }
+    });
 
-      navigator.serviceWorker.addEventListener("controllerchange", () => {
-        if (!refreshing) {
-          window.location.reload();
-          refreshing = true;
-        }
-      });
+    let deferredPrompt, btnAdd;
+    self.addEventListener("beforeinstallprompt", (e) => {
+      console.log("beforeinstallprompt", e);
 
-      self.addEventListener("message", function (event) {
-        if (event.data.action === "installed") {
-          localStorage.setItem("installed-version", event.data.version);
+      e.preventDefault();
+      deferredPrompt = e;
 
-          me.messageBus.dispatch("notification", {
-            // toaster
-            text: `New version installed: ${event.data.version}`
-          });
-        }
+      btnAdd = parseHTML(
+        /*html*/ `<a title="Install this PWA to your device" id="pwa-install" href="/install/"><svg-icon icon="rocket"></svg-icon></a>`
+      )[0];
+      btnAdd.addEventListener("click", async (e) => {
+        e.preventDefault();
+        e.data.deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        console.log(`User response to the install prompt: ${outcome}`);
+        deferredPrompt = null;
       });
-    }
+      document.body.appendChild(btnAdd);
+    });
+
+    navigator.serviceWorker.addEventListener("message", (e) => {
+      if (e.data && e.data.command === "deferredPrompt")
+        btnAdd.classList.add("show");
+    });
   }
 
   /**
@@ -582,24 +611,21 @@ export class PurePWA {
    * silently after rendering is complete.
    */
   async #cacheMPAInBackground() {
+    if (sessionStorage.getItem("mpa-cache")) return; // needed once per session
+
     const URLs = Object.keys(this.settings.routes);
 
-    for (const url of URLs) {
-      let baseUrl = new URL(
-        url,
-        `${window.location.protocol}//${window.location.host}`
-      );
-
-      const response = await fetch(url);
+    for (const relativeMPAPath of URLs) {
+      const response = await fetch(relativeMPAPath);
       const doc = new DOMParser().parseFromString(
         await response.text(),
         "text/html"
       );
       const cssLinks = Array.from(
         doc.querySelectorAll('link[rel="stylesheet"]')
-      ).map((link) => new URL(link.href, baseUrl).href);
+      ).map((link) => relativeMPAPath + link.getAttribute("href"));
       const jsScripts = Array.from(doc.querySelectorAll("script[src]")).map(
-        (script) => new URL(script.getAttribute("src"), baseUrl).href
+        (script) => relativeMPAPath + script.getAttribute("src")
       );
       const allResources = [...cssLinks, ...jsScripts];
 
@@ -607,6 +633,8 @@ export class PurePWA {
         fetch(resource);
       }
     }
+
+    sessionStorage.setItem("mpa-cache", "1");
   }
 
   /**
@@ -621,35 +649,6 @@ export class PurePWA {
   /**
    * This makes sure the app install button
    */
-  #addPWAInstallButton() {
-    const btnAdd = parseHTML(
-      /*html*/ `<a title="Install this PWA to your device" class="pwa-install" href="/install/"><svg-icon icon="rocket"></svg-icon></a>`
-    )[0];
-    document.body.appendChild(btnAdd);
-
-    // Assuming the service worker registration is done elsewhere in your code
-    navigator.serviceWorker.ready
-      .then(function (registration) {
-        console.log("Service Worker ready", registration);
-        registration.active.postMessage({ command: "getDeferredPrompt" });
-      })
-      .catch(function (error) {
-        console.log(
-          "Error occurred while communicating with service worker: ",
-          error
-        );
-      });
-
-    navigator.serviceWorker.addEventListener("message", function (event) {
-      if (event.data && event.data.command === "deferredPrompt") {
-        btnAdd.style.display = "block";
-        btnAdd.addEventListener("click", function (e) {
-          e.preventDefault();
-          event.data.deferredPrompt.prompt();
-        });
-      }
-    });
-  }
 
   get settings() {
     return this.#settings;
