@@ -766,7 +766,7 @@ export class PurePWA {
   }
 
   startViewTransition(callback) {
-    if (document.documentElement.getAttribute("data-use-animations") === "1")
+    if (document.documentElement.getAttribute("data-use-animations") === "1" && 'startViewTransition' in document)
       return document.startViewTransition(callback);
     else return purePWA.startViewTransitionFallback(callback);
   }
