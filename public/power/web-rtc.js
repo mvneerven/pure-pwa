@@ -12,8 +12,8 @@ customElements.define(
       const pc = new RTCPeerConnection();
 
       const sendToRemotePeer = async (type, sdp) => {
-        const compressedSdc = btoa(WebRTC.reduce(sdp));
-        console.log("compressed Sdc", compressedSdc);
+        const compressedSdp = btoa(WebRTC.reduce(sdp));
+        console.log("compressed Sdc", compressedSdp);
 
         shareButton.addEventListener("click", async (e) => {
           e.preventDefault();
@@ -21,7 +21,7 @@ customElements.define(
           const data = {
             title: "Come join my call",
             text: "You are invited to this video call",
-            url: `http://192.168.120.29:8766/power/?type=${type}&sdp=${compressedSdc}`
+            url: `https://app.pure-pwa.com/power/?type=${type}&sdp=${compressedSdp}`
           };
 
           try {

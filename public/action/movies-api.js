@@ -2,7 +2,8 @@ import {
   RouterElement,
   formatDate,
   hookEscapeKey,
-  HTMLBuilder
+  HTMLBuilder,
+  enQueue
 } from "../assets/js/common.js";
 
 import { TMDB } from "./domain/tmdb.js";
@@ -39,7 +40,9 @@ customElements.define(
 
       this.addEventListener("click", (e) => {
         const card = e.target.closest(".card");
+        
         if (card) {
+          
           card.style = `view-transition-name: card`;
           card.querySelector(
             ":scope>span"
@@ -50,7 +53,7 @@ customElements.define(
 
     async getPopularMovies() {
       hookEscapeKey(() => history.back());
-
+     
       const movies = await this.tmdb.getPopularMovies();
 
       return /*html*/ `<section class="cards" >${this.getCards(

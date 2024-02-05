@@ -50,7 +50,7 @@ const app = {
     "/robots.txt"
   ],
   name: "pure-pwa",
-  version: "0.0.25"
+  version: "0.0.26"
 };
 
 const CACHE_NAME = `app_${app.name}v${app.version}`;

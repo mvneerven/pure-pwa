@@ -77,16 +77,13 @@
       border-radius: 1rem;
       width: 300px;
       height: 70vh;
-
       background-repeat: no-repeat;
       background-color: transparent;
       background-image: var(--img);
-
       border-radius: 1rem;
       width: 100%;
-      //height: calc(100vh - 200px - 20rem);
       background-size: cover;
-      background-position: center;
+      background-position: center top;
     }
   }
 
