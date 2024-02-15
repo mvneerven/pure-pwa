@@ -4,13 +4,12 @@
 
 ![mobile-view.webp](./md/mobile-view.webp)
 
-
 # Table of Contents
+
 - [Setup](#Setup)
 - [Project Structure](#Project_Structure)
 - [Usage](#usage)
 - [More Info](#more_info)
-
 
 # Setup
 
@@ -21,7 +20,7 @@
 The two most important technologies used are:
 
 - Web Components
-- ES Modules (loaded and linked ar runtime)
+- ES Modules (loaded and linked at runtime)
 
 ## Tooling
 
@@ -328,8 +327,8 @@ Here are some highlights:
 
 Did you notice?
 
-- No npm_modules/
-- No package.json
+- No `node_modules/`
+- No `package.json`
 - No build time
 
 # Stripping Down to Boilerplate
