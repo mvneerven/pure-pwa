@@ -47,10 +47,11 @@ const app = {
     "/index.html",
     "/manifest.webmanifest",
     "/mpa-route-cards.js",
-    "/robots.txt"
-  ],
+    "/robots.txt",
+    "/service-worker.js"
+],
   name: "pure-pwa",
-  version: "0.0.26"
+  version: "0.0.28"
 };
 
 const CACHE_NAME = `app_${app.name}v${app.version}`;

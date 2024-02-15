@@ -1,12 +1,59 @@
+[data-url="/settings/" ]{
+  fieldset {
+    display: block;
+    margin-bottom: 3rem;
+
+    legend{
+      margin-bottom: 1rem;
+    }
+  }
+
+}
+
+
 [data-form-element="styled-radio"] {
   display: grid;
   grid-template-columns: 27% 1fr;
   gap: 5rem;
 
+  
   label {
     display: inline-block;
     text-align: center;
     margin-right: .5rem;
   }
+
+  .radio-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+
+
+    >label {
+      padding: .2rem .9rem;
+      display: grid;
+      grid-template-columns: unset !important;
+      grid-template-rows: 32px 1fr;
+
+      input[type=radio] {
+        position: absolute;
+        opacity: 0;
+      }
+
+      &:has(input:checked) {
+        outline: 2px solid var(--color-accent);
+        border-radius: .5rem;
+      }
+
+      >[data-label] {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        font-size: xx-small;
+        margin-top: 0;
+      }
+    }
+  }
+
 
 }

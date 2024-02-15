@@ -93,24 +93,30 @@ export function parseHTML(html) {
 
 /**
  * Create nested Proxy to monitor
- * @param {*} eventTarget Object to use for 'state-change' event dispatching
- * @param {*} state Object holding initial state
- * @param {*} objectPath Path string used to indentify nested objects and values
+ * @param {EventTarget} eventTarget Object to use for 'state-change' event dispatching
+ * @param {Object} state Object holding initial state
+ * @param {String} objectPath Path string used to indentify nested objects and values
  * @returns {Proxy} Proxy Object - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy
  */
 export function createProxy(eventTarget, state = {}, objectPath = "") {
   return new Proxy(state, {
     set: (target, property, value) => {
+      const oldValue = structuredClone(target[property]);
+
       const detail = {
         path: objectPath,
+        target: target,
         name: property,
+        oldValue: oldValue,
         value: value
       };
+      
       target[property] = value;
 
       if (Array.isArray(target)) {
         if (isNumeric(property)) {
           delete detail.name;
+          detail.type="add";
           detail.newIndex = parseInt(property);
         }
       }
@@ -384,34 +390,87 @@ export class RouterElement extends CustomElement {
 }
 
 /**
- * API requests using fetch()
- * @param {*} url - API endpoint
- * @param {*} method - GET, POST, PUT, DELETE
- * @param {*} headers - Request headers to add
- * @param {*} body - if method is 'POST', provide request body
- * @returns
+ * Encapsulates fetch() functionality
+ * @event beforeRequest dispatched before fetching
+ * @event afterResponse dispatched when response is fetched, but before returning the results.
  */
-export async function apiRequest(
-  url,
-  method = "GET",
-  headers = {},
-  body = null
-) {
-  try {
-    //console.log("API request:", url, method, headers, body);
+export class ApiRequest extends EventTarget {
+  #interceptors = [];
 
-    let response = await fetch(url, { method, headers, body });
+  constructor(baseUrl, defaultHeaders = {}) {
+    super();
+    this.baseUrl = baseUrl;
+    this.defaultHeaders = defaultHeaders;
+  }
 
-    if (!response.ok) {
-      const message = await response.text();
-      throw new Error(`${response.status}: ${message}`);
-    } else {
-      const data = await response.json();
-      return data;
+  async #execute(localUrl, options = {}) {
+    try {
+      const mergedOptions = {
+        method: "GET",
+        ...options,
+        headers: { ...this.defaultHeaders, ...options.headers }
+      };
+      const url = `${this.baseUrl}${localUrl}`;
+
+      this.#dispatch("beforeRequest", {
+        request: {
+          url: url,
+          options: mergedOptions
+        }
+      });
+
+      const response = await fetch(url, mergedOptions);
+
+      this.#dispatch("afterResponse", {
+        request: {
+          url: url,
+          options: mergedOptions
+        },
+        response: response
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return await response.json();
+    } catch (error) {
+      // Handle network errors or other issues
+      console.error("Fetch error:", error);
+      throw error;
     }
-  } catch (error) {
-    console.error("API request failed:", error);
-    throw error;
+  }
+
+  #dispatch(eventName, data) {
+    return this.dispatchEvent(
+      new CustomEvent(eventName, {
+        detail: data
+      })
+    );
+  }
+
+  addInterceptor(interceptor) {
+    this.#interceptors.push(interceptor);
+  }
+
+  on(eventName, func) {
+    this.addEventListener(eventName, func);
+    return this;
+  }
+
+  async getData(url, options = {}) {
+    return this.#execute(url, {
+      ...options,
+      method: "GET"
+    });
+  }
+
+  async postData(url, data, options = {}) {
+    return this.#execute(url, {
+      ...options,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
   }
 }
 
@@ -526,7 +585,10 @@ export class PurePWA {
         if (event.detail > 1) {
           /* Prevent doubleclicking to select text */
           event.preventDefault();
-        } else if (event.button === 0 && event.target.closest(".title")) {
+        } else if (
+          event.button === 0 &&
+          event.target.closest("header h1, header h2")
+        ) {
           /* Click on title area -> HOME */
           window.location = "/";
         }
@@ -766,7 +828,10 @@ export class PurePWA {
   }
 
   startViewTransition(callback) {
-    if (document.documentElement.getAttribute("data-use-animations") === "1" && 'startViewTransition' in document)
+    if (
+      document.documentElement.getAttribute("data-use-animations") === "1" &&
+      "startViewTransition" in document
+    )
       return document.startViewTransition(callback);
     else return purePWA.startViewTransitionFallback(callback);
   }

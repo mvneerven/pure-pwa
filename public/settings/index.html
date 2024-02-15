@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-url="/settings/">
+<html lang="en" data-url="/settings/" class="pure">
 
 <head>
   <meta charset="UTF-8" />
@@ -16,25 +16,24 @@
 <body>
   <div class="app-container">
     <header>
-      <span class="title">
-        <h1>
-          Settings
-        </h1>
-        <h2>
-          Configure App
-        </h2>
-      </span>
-      <app-menu> </app-menu>
+      <h1>Settings</h1>
+      <h2>Configure App</h2>
     </header>
+    <aside>
+      <app-menu> </app-menu>
+    </aside>
     <main>
       <section id="settings-form">
         <settings-form>
           <x-form>
             <form action="" method="post">
-              <legend>Settings</legend>
+
               <fieldset>
+                <legend>
+                  Appearance
+                </legend>
                 <label data-form-element="styled-radio">
-                  <span data-label>Appearance</span>
+
                   <span>
                     <div class="radio-buttons" data-selected="@appearance">
 
@@ -52,13 +51,18 @@
                       </label>
 
                       <label>
-                        <input type="radio" name="appearance" value="light" aria-label="Light mode"  />
+                        <input type="radio" name="appearance" value="light" aria-label="Light mode" />
                         <svg-icon icon="day"></svg-icon>
                         <span data-label>Light</span>
                       </label>
                     </div>
                   </span>
                 </label>
+
+              </fieldset>
+              <fieldset>
+                <legend>Animation</legend>
+
                 <range-switch>
                   <label data-form-element="switch" data-selected="@useAnimations">
                     <span data-label>Animation</span>

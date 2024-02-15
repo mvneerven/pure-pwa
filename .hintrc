@@ -10,7 +10,8 @@
         "ignore": [
           "accent-color",
           "-webkit-tap-highlight-color",
-          "backdrop-filter"
+          "backdrop-filter",
+          "user-select"
         ]
       }
     ],

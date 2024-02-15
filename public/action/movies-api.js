@@ -52,9 +52,17 @@ customElements.define(
     }
 
     async getPopularMovies() {
+      const me = this;
       hookEscapeKey(() => history.back());
      
       const movies = await this.tmdb.getPopularMovies();
+
+      enQueue(()=>{
+        me.querySelectorAll(".fade-in").forEach(item=>{
+          console.log(item)
+          item.classList.remove("fade-in")
+        });
+      }, 300);
 
       return /*html*/ `<section class="cards" >${this.getCards(
         movies.results
@@ -75,7 +83,7 @@ customElements.define(
               <img class="not-in-view" loading="lazy" src="${this.tmdb.settings.cdnBaseUrl + DETAIL_IMG_SIZE + item.backdrop_path}" />
           </a>`
         );
-      }
+      }      
       return builder.toHTML();
     }
 

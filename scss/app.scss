@@ -30,6 +30,7 @@
 }
 
 html {
+  user-select: none;
   height: 100vh;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -45,7 +46,8 @@ html {
 body {
   margin: 0;
   overflow: hidden;
-  visibility: hidden; /* fix for ISSUE 1  */
+  visibility: hidden;
+  /* fix for ISSUE 1  */
 }
 
 main {
@@ -202,28 +204,27 @@ article {
 }
 
 header {
-  span.title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  > h1 {
     cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 2.5rem;
+    width: 100%;
+  }
 
-    h1 {
-      text-transform: uppercase;
-      text-align: center;
-      font-size: 2.5rem;
-      width: 100%;
-    }
-
-    h2 {
-      font-size: 1.1rem;
-      margin-top: -.7rem;
-      color: rgba(var(--color-primary-100), .02);
-      letter-spacing: .3rem;
-      font-variant: small-caps;
-      text-transform: lowercase;
-      padding: 0rem .4rem .3rem .4rem;
-    }
+  > h2 {
+    cursor: pointer;
+    font-size: 1.1rem;
+    margin-top: -.7rem;
+    color: rgba(var(--color-primary-100), .02);
+    letter-spacing: .3rem;
+    font-variant: small-caps;
+    text-transform: lowercase;
+    padding: 0rem .4rem .3rem .4rem;
   }
 }

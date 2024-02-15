@@ -8,7 +8,7 @@ range-switch {
     border-radius: 50px;
     cursor: pointer;
     transition: .2s ease-in-out;
-    padding: 0;
+    padding: 0!important;
 
     &:focus {
       outline: 2px solid var(--color-accent);
