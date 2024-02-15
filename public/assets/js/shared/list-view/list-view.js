@@ -21,7 +21,6 @@ customElements.define(
 
         this.listViewItems = boundElement[boundProperty];
         boundElement.addEventListener("state-change", (e) => {
-          console.log("re-render list view");
           this.renderRoot.innerHTML = this.render();
         });
       }

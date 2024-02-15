@@ -48,7 +48,6 @@ const POLYFILLS = {
             window.addEventListener(
               "popstate",
               (event) => {
-                console.log(event);
                 let navigateEvent = checkNavigationInterception(
                   window.location.href
                 );
@@ -110,13 +109,13 @@ export function createProxy(eventTarget, state = {}, objectPath = "") {
         oldValue: oldValue,
         value: value
       };
-      
+
       target[property] = value;
 
       if (Array.isArray(target)) {
         if (isNumeric(property)) {
           delete detail.name;
-          detail.type="add";
+          detail.type = "add";
           detail.newIndex = parseInt(property);
         }
       }

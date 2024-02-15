@@ -57,13 +57,6 @@ customElements.define(
      
       const movies = await this.tmdb.getPopularMovies();
 
-      enQueue(()=>{
-        me.querySelectorAll(".fade-in").forEach(item=>{
-          console.log(item)
-          item.classList.remove("fade-in")
-        });
-      }, 300);
-
       return /*html*/ `<section class="cards" >${this.getCards(
         movies.results
       )}</section>`;

@@ -1,4 +1,6 @@
 const app = {
+  name: "pure-pwa",
+  version: "0.0.29",
   files: [
     "/about/index.html",
     "/action/domain/tmdb.js",
@@ -49,9 +51,8 @@ const app = {
     "/mpa-route-cards.js",
     "/robots.txt",
     "/service-worker.js"
-],
-  name: "pure-pwa",
-  version: "0.0.28"
+]
+  
 };
 
 const CACHE_NAME = `app_${app.name}v${app.version}`;
