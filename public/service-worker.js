@@ -1,6 +1,6 @@
 const app = {
   name: "pure-pwa",
-  version: "0.0.40",
+  version: "0.1.0",
   files: [
     "/about/index.html",
     "/action/domain/tmdb.js",
@@ -25,6 +25,8 @@ const app = {
     "/assets/js/shared/app-menu/app-menu.js",
     "/assets/js/shared/dropdown-list/dropdown-list.js",
     "/assets/js/shared/list-view/list-view.js",
+    "/assets/js/shared/localize-section/localize-section.js",
+    "/assets/js/shared/md-lite/md-lite.js",
     "/assets/js/shared/message-toaster/message-toaster.js",
     "/assets/js/shared/range-switch/range-switch.js",
     "/assets/js/shared/svg-icon/svg-icon.js",
@@ -33,6 +35,8 @@ const app = {
     "/assets/js/app.js",
     "/assets/js/common.js",
     "/assets/js/demo-settings.js",
+    "/assets/locale/nl/about.html",
+    "/assets/locale/nl/purity.html",
     "/beauty/image-carousel.js",
     "/beauty/index.html",
     "/entry/index.html",
@@ -51,9 +55,7 @@ const app = {
     "/manifest.webmanifest",
     "/robots.txt",
     "/service-worker.js"
-]
-
-  
+  ]
 };
 
 const CACHE_NAME = `app_${app.name}v${app.version}`;
