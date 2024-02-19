@@ -12,13 +12,13 @@
 @import "../public/assets/js/shared/range-switch/index";
 @import "../public/assets/js/shared/svg-icon/index";
 @import "../public/assets/js/shared/list-view/index";
+@import "../public/home/index";
 @import "../public/about/index";
 @import "../public/power/index";
 @import "../public/action/index";
 @import "../public/beauty/index";
 @import "../public/flow/index";
 @import "../public/settings/index";
-@import "./home";
 @import "./guidance";
 @import "skeleton";
 @import "ripple";
@@ -54,7 +54,6 @@ main {
   padding-bottom: 60px;
 }
 
-
 h1,
 h2,
 h3,
@@ -67,8 +66,14 @@ h6 {
 }
 
 blockquote {
-  padding: 3rem;
-  font-size: larger;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding: 0;
+  padding-left: .5rem;
+  font-size: large;
+  font-style: italic;
+  font-weight: 400;
+  border-left: 3px solid var(--color-primary-100);
 }
 
 .app-container {

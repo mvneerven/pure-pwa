@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-url="/settings/" class="pure">
+<html lang="en" data-url="/settings/">
 
 <head>
   <meta charset="UTF-8" />
@@ -38,7 +38,7 @@
                     <div class="radio-buttons" data-selected="@appearance">
 
                       <label>
-                        <input autofocus type="radio" name="appearance" value="system-default"
+                        <input autofocus type="radio" name="appearance" value=""
                           aria-label="Automatic/device mode" />
                         <svg-icon icon="device"></svg-icon>
                         <span data-label>System</span>
@@ -69,6 +69,44 @@
                     <input type="range" min="0" max="1" step="1" name="animation" />
                   </label>
                 </range-switch>
+              </fieldset>
+
+
+              <fieldset>
+                <legend>Theme</legend>
+
+                <label data-form-element="styled-radio">
+
+                  <span>
+                    <div class="radio-buttons" data-selected="@theme">
+
+                      <label>
+                        <input type="radio" name="theme" value="pure" />
+                        <svg-icon icon="leaf"></svg-icon>
+                        <span data-label>Pure</span>
+                      </label>
+
+                      <label>
+                        <input type="radio" name="theme" value="material" />
+                        <svg-icon icon="material"></svg-icon>
+                        <span data-label>Material</span>
+                      </label>
+                    </div>
+                  </span>
+                </label>
+              </fieldset>
+
+              <fieldset>
+                <legend>Localization</legend>
+
+                <label data-selected="@language">
+                  <span data-label>UI Language</span>
+                  <select size="1" locked type="search" list="languages" name="language">
+                    <option value="en'">English</option>
+                    <option value="nl">Nederlands</option>
+                  </select>
+                </label>
+
               </fieldset>
             </form>
           </x-form>

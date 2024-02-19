@@ -5,31 +5,83 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PurePWA - Power &amp; Purity</title>
-  <link rel="stylesheet" href="assets/css/app.css" />
+
   <script defer type="module" src="assets/js/app.js"></script>
-  <script defer type="module" src="./mpa-route-cards.js"></script>
+
   <meta name="view-transition" content="same-origin" />
-  <meta name="theme-color" content="#444444" media="(prefers-color-scheme: dark)">
-  <meta name="theme-color" content="#872e4e" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#dddddd" media="(prefers-color-scheme: light)">
   <meta name="description" content="PurePWA - Ultra-lean, Web Components enhanced, no-build boilerplate for PWAs" />
   <link rel="manifest" href="/manifest.webmanifest" />
+  <script type="module">
+    const htmlEl = document.documentElement;
+    htmlEl.style.backgroundColor = htmlEl.getAttribute("data-color-scheme") === "dark" ? "#121212" : "#dddddd"
 
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        htmlEl.classList.add("splash");
+        setTimeout(() => {
+          htmlEl.classList.remove("splash");
+          window.location.replace("/home/");
+        }, 1000);
+      }, 50);
+
+    });
+
+  </script>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body{
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #sw-notification {
+      display: none !important
+    }
+
+    .progress {
+      border-radius: 5px;
+      max-width: 300px;
+      background-size: 23em 0.25em;
+      height: 10px;
+      background-color: #fb8836;
+      animation: cssload-width .8s cubic-bezier(0.45, 0, 1, 1);
+    }
+
+    @keyframes cssload-width {
+
+      0%,
+      100% {
+        transition-timing-function: cubic-bezier(1, 0, 0.65, 0.85);
+      }
+
+      0% {
+        width: 0;
+      }
+
+      100% {
+        width: 50%;
+      }
+    }
+  </style>
 </head>
 
 <body>
-  <div class="app-container">
-    <header>
-      <h1>Pure PWA</h1>
-      <h2>Power &amp; Purity</h2>
-      <app-menu> </app-menu>
-    </header>
-    <main>
-      <mpa-route-cards></mpa-route-cards>
-    </main>
-    <footer>
-      <message-toaster></message-toaster>
-    </footer>
-  </div>
+  <div class="progress"></div>
 </body>
 
 </html>

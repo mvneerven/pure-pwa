@@ -30,7 +30,7 @@ export const DEMO_SETTINGS = {
    * a dialog with this information.
    */
   routes: {
-    "/": {
+    "/home/": {
       guidance: {
         title: "PurePWA",
         description: "Hybrid MPA - General Features",

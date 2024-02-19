@@ -50,6 +50,13 @@ form {
     border: 0;
   }
 
+  select{
+    background-color: var(--color-surface-200);
+    padding: 0.7rem 1.1rem;
+    color: var(--color-primary-100);
+    border-radius: .4rem;
+  }
+
   label {
     position: relative;
     font-size: smaller;
@@ -64,6 +71,9 @@ form {
       text-align: right;
       vertical-align: super;
       margin-right: 1rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     &:has([required])>span::after {

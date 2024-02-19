@@ -14,7 +14,6 @@
     "/assets/img/icons.svg",
     "/assets/img/marcvanneerven.webp",
     "/assets/img/og.webp",
-    "/assets/img/pure-pwa-512 - orig.png",
     "/assets/img/pure-pwa-512.png",
     "/assets/img/video-cover.svg",
     "/assets/js/services/app-files.json",
@@ -37,6 +36,8 @@
     "/flow/index.html",
     "/flow/mock-todo-api.js",
     "/flow/todo-app.js",
+    "/home/index.html",
+    "/home/mpa-route-cards.js",
     "/power/index.html",
     "/power/web-rtc.js",
     "/purity/index.html",
@@ -45,7 +46,6 @@
     "/favicon.ico",
     "/index.html",
     "/manifest.webmanifest",
-    "/mpa-route-cards.js",
     "/robots.txt",
     "/service-worker.js"
 ]

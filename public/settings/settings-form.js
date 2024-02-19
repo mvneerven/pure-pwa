@@ -9,9 +9,14 @@ customElements.define(
 
       const appearanceSettings = PurePWA.detectAppearanceSettings();
 
-      this.state.appearance = localStorage.getItem("appearance");
+      /**
+       * All settings have to be declared
+       */
+      this.state.appearance = localStorage.getItem("appearance") || "";
       this.state.colorScheme = appearanceSettings.theme;
       this.state.useAnimations = localStorage.getItem("use-animations") || "0";
+      this.state.language = localStorage.getItem("language") || "en";
+      this.state.theme = localStorage.getItem("theme") || "pure";
     }
 
     connectedCallback() {
@@ -26,10 +31,20 @@ customElements.define(
                 ? appearanceSettings.theme
                 : purePWA.appearance;
 
+            window.location.reload();
             break;
           case "animation":
             purePWA.useAnimations = e.detail.value === "1" ? true : false;
             break;
+
+          case "theme":
+            purePWA.theme = e.detail.value;
+            break;
+          
+          case "language":
+            purePWA.language = e.detail.value;
+            window.location.reload();
+            break
         }
       });
     }

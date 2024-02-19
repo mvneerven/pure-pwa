@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" data-url="/home/">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PurePWA - Power &amp; Purity</title>
+  <link rel="stylesheet" href="../assets/css/app.css" />
+  <script defer type="module" src="../assets/js/app.js"></script>
+  <script defer type="module" src="mpa-route-cards.js"></script>
+  <meta name="view-transition" content="same-origin" />
+  <meta name="theme-color" content="#444444" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#872e4e" media="(prefers-color-scheme: light)">
+  <meta name="description" content="PurePWA - Ultra-lean, Web Components enhanced, no-build boilerplate for PWAs" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+</head>
+
+<body>
+  <div class="app-container">
+    <header>
+      <h1>Pure PWA</h1>
+      <h2>Power &amp; Purity</h2>
+      <app-menu> </app-menu>
+    </header>
+    <main>
+      <mpa-route-cards></mpa-route-cards>
+    </main>
+    <footer>
+      <message-toaster></message-toaster>
+    </footer>
+  </div>
+</body>
+
+</html>

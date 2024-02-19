@@ -5,8 +5,8 @@ customElements.define(
   /**
    * HTML Form progressive enhancement that keeps form values in state["x-form-data"]
    * and dispatches x-form-change events on change & submit.
-   * 
-   * @fires XForm#x-form-change 
+   *
+   * @fires XForm#x-form-change
    */
   class XForm extends CustomElement {
     formIsDirty;
@@ -96,10 +96,17 @@ customElements.define(
               .forEach((formElement) => {
                 let name = toCamelCase(valueName.substring(1));
                 let value = this.stateContainer?.state[name] || "";
-                
-                if (["checkbox", "radio"].includes(formElement.type))
-                  formElement.checked = formElement.value === value;
-                else formElement.value = value;
+
+                if (["checkbox", "radio"].includes(formElement.type)) {
+                  if (formElement.value === value) formElement.checked = true;
+                } else if (["SELECT"].includes(formElement.nodeName)) {
+                  for (let i = 0; i < formElement.options.length; i++) {
+                    if (formElement.options[i].value === value) {
+                      formElement.selectedIndex = i;
+                      break;
+                    }
+                  }
+                } else formElement.value = value;
               });
           }
         });

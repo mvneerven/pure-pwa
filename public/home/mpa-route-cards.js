@@ -1,4 +1,4 @@
-import { CustomElement, enQueue, HTMLBuilder } from "./assets/js/common.js";
+import { CustomElement, enQueue, HTMLBuilder } from "../assets/js/common.js";
 
 customElements.define(
   "mpa-route-cards",
@@ -50,7 +50,7 @@ customElements.define(
     }
 
     getCard(card) {
-      return /*html*/ `<a class="fade-in" data-page="${card.id}" href="${card.href}">${card.title}</a>`;
+      return /*html*/ `<a class="fade-in" data-page="${card.id}" href="${card.href}">${purePWA.localizeString(card.title)}</a>`;
     }
   }
 );

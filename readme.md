@@ -9,6 +9,7 @@
 - [Setup](#Setup)
 - [Project Structure](#Project_Structure)
 - [Usage](#usage)
+- [New in](#New_In)
 - [More Info](#more_info)
 
 # Setup
@@ -331,6 +332,115 @@ Did you notice?
 - No `package.json`
 - No build time
 
+# Localization
+
+PurePWA supports localization (introduced in version `0.1.0`).
+
+The `/public/assets/js/app-settings.js` file's `APP_SETTINGS.localization` hosts localized strings
+
+```js
+localization: {
+    defaultLanguage: "en",
+    strings: {
+      "Power & Purity": {
+        nl: "Kracht & Puurheid"
+      },
+      Power: {
+        nl: "Kracht"
+      },
+      Purity: {
+        nl: "Puurheid"
+      },
+      [...]
+```
+
+To accomodate for larger, localized sections (which are handy for localized HTML blocks), there's a `<localize-section></localize-section>` Web Component :
+
+```html
+<localize-section url="about.html">
+  <p>
+    <em>PurePWA</em> is an experiment by
+    <a
+      rel="noopener"
+      target="_blank"
+      href="https://www.linkedin.com/in/mvneerven/"
+      >Marc van Neerven</a
+    >, a Fractional CTO with a passion for the <em>Modern Web</em>
+  </p>
+
+  <p>
+    The aim was to <em>simplify boilerplate for PWAs</em>, while just using the
+    <em>Modern Web</em>, and nothing else.
+  </p>
+
+  <p>
+    The Modern Web is a beautiful place, but many Web Developers seem to missed
+    that, with the 'framework path' being what everybody gets taught.
+  </p>
+</localize-section>
+```
+
+The `url` attribute refers to a file under `/public/assets/locale/<2-letter-language-code>/`. You can see a few examples of these HTML block files under `/public/assets/locale/nl/`
+
+## Localization Under the Hood
+
+Since a lot of PurePWA uses Progressive Enhancement, we had to come up with an easy way to localize-in-place. This is quite different from a Framework app that generates UI from code, like React, Angular of Vue.
+
+We use the `Document.createNodeIterator()` method together with a custom Node Filtering to make very efficient `#text` node changes based on our localization strings.
+
+```js
+const textFilter = (node) => {
+  return node.nodeType === Node.TEXT_NODE
+    ? NodeFilter.FILTER_ACCEPT
+    : NodeFilter.FILTER_SKIP;
+};
+
+const iterator = document.createNodeIterator(
+  document.body,
+  NodeFilter.SHOW_TEXT,
+  textFilter
+);
+let node = iterator.nextNode();
+
+while (node) {
+  // translate
+  node = iterator.nextNode();
+}
+```
+
+# Releasing a PWA version
+
+## App name, version and file List (ServiceWorker)
+
+Since the PWA has a ServiceWorker that caches the app files, the array of application files needs to be in `service-worker.js`:
+
+```js
+const app = {
+  name: "pure-pwa",
+  version: "0.1.0",
+  files: [
+    "/about/index.html",
+    "/action/domain/tmdb.js",
+    "/action/index.html",
+    "/action/movies-api.js",
+    "/assets/css/app.css",
+    "/assets/css/app.css.map",
+    [...]
+```
+
+To update this array (if needed), you can run the PowerShell file in the project root:
+
+```powershell
+.\update_cache_files.ps1
+```
+
+Since the project doesn't have bundling and NPM, this was an easy way to get the file list updated.
+
+The .ps1 file updates `/public/assets/js/services/app-files.json`, and before deploying, I manually copy the array contents to the `service-worker.js` `app.files` array.
+
+Before deploying to your cloud location, don't forget to update app.name (first deploy) & app.version (every deploy). These are used in the ServiceWorker code to refresh the cache.
+
+
 # Stripping Down to Boilerplate
 
 `/public/assets/js/app.js` contains a few lines that add the demo pages and some other demo-related stuff to the project:
@@ -366,6 +476,14 @@ if (typeof navigator.serviceWorker !== "undefined")
 ```
 
 Of course, you'll then remove the `about`, `purity`, `flow`, `entry`, `action` and `power` folders and adapt the `routes` property in `/public/assets/js.app-settings`.
+
+# New In
+
+## 0.1.0
+
+- Added a custom Splash screen (all other pages, including `/home/`, are now in their own folder)
+- Added support for Localization (see Localization). 
+- Fixed `<header>` HTML semantics
 
 # More Info
 

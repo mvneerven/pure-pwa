@@ -1,6 +1,6 @@
 const app = {
   name: "pure-pwa",
-  version: "0.0.29",
+  version: "0.0.40",
   files: [
     "/about/index.html",
     "/action/domain/tmdb.js",
@@ -17,7 +17,6 @@ const app = {
     "/assets/img/icons.svg",
     "/assets/img/marcvanneerven.webp",
     "/assets/img/og.webp",
-    "/assets/img/pure-pwa-512 - orig.png",
     "/assets/img/pure-pwa-512.png",
     "/assets/img/video-cover.svg",
     "/assets/js/services/app-files.json",
@@ -40,6 +39,8 @@ const app = {
     "/flow/index.html",
     "/flow/mock-todo-api.js",
     "/flow/todo-app.js",
+    "/home/index.html",
+    "/home/mpa-route-cards.js",
     "/power/index.html",
     "/power/web-rtc.js",
     "/purity/index.html",
@@ -48,10 +49,10 @@ const app = {
     "/favicon.ico",
     "/index.html",
     "/manifest.webmanifest",
-    "/mpa-route-cards.js",
     "/robots.txt",
     "/service-worker.js"
 ]
+
   
 };
 

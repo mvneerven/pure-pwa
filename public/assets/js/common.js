@@ -2,72 +2,75 @@
  * List of PolyFills to check for
  */
 const POLYFILLS = {
-  navigation: {
-    isNeeded: () => {
-      return (
-        typeof window.navigation === "undefined" ||
-        !("navigate" in window.navigation)
-      );
-    },
-    install: () => {
-      const checkNavigationInterception = (url) => {
-        let interception;
-        const navigateEvent = new CustomEvent("navigate");
+    navigation: {
+      isNeeded: () => {
+        return (
+          typeof window.navigation === "undefined" ||
+          !("navigate" in window.navigation)
+        );
+      },
+      install: () => {
+        const checkNavigationInterception = (url) => {
+          let interception;
+          const navigateEvent = new CustomEvent("navigate");
 
-        navigateEvent.destination = {
-          url: url
-        };
-        navigateEvent.intercept = (o) => {
-          if (o) interception = o;
-        };
+          navigateEvent.destination = {
+            url: url
+          };
+          navigateEvent.intercept = (o) => {
+            if (o) interception = o;
+          };
 
-        window.navigation.dispatchEvent(navigateEvent);
+          window.navigation.dispatchEvent(navigateEvent);
 
-        navigateEvent.intercept();
-        if (interception) {
-          navigateEvent.interception = interception;
-        }
-        return navigateEvent;
-      };
-
-      window.navigation = new EventTarget();
-      const me = this;
-      document.addEventListener("click", (e) => {
-        if (e.target.href) {
-          let navigateEvent = checkNavigationInterception(e.target.href);
-
-          if (
-            navigateEvent.interception &&
-            typeof navigateEvent.interception.handler === "function"
-          ) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.history.pushState({}, "", navigateEvent.destination.url);
-            navigateEvent.interception.handler.bind(me).call();
-            window.addEventListener(
-              "popstate",
-              (event) => {
-                let navigateEvent = checkNavigationInterception(
-                  window.location.href
-                );
-                if (
-                  navigateEvent.interception &&
-                  typeof navigateEvent.interception.handler === "function"
-                ) {
-                  navigateEvent.interception.handler.bind(me).call();
-                }
-              },
-              {
-                once: true
-              }
-            );
+          navigateEvent.intercept();
+          if (interception) {
+            navigateEvent.interception = interception;
           }
-        }
-      });
+          return navigateEvent;
+        };
+
+        window.navigation = new EventTarget();
+        const me = this;
+        document.addEventListener("click", (e) => {
+          if (e.target.href) {
+            let navigateEvent = checkNavigationInterception(e.target.href);
+
+            if (
+              navigateEvent.interception &&
+              typeof navigateEvent.interception.handler === "function"
+            ) {
+              e.preventDefault();
+              e.stopPropagation();
+
+              window.history.pushState({}, "", navigateEvent.destination.url);
+              navigateEvent.interception.handler.bind(me).call();
+              window.addEventListener(
+                "popstate",
+                (event) => {
+                  let navigateEvent = checkNavigationInterception(
+                    window.location.href
+                  );
+                  if (
+                    navigateEvent.interception &&
+                    typeof navigateEvent.interception.handler === "function"
+                  ) {
+                    navigateEvent.interception.handler.bind(me).call();
+                  }
+                },
+                {
+                  once: true
+                }
+              );
+            }
+          }
+        });
+      }
     }
-  }
-};
+  },
+  attr = (name) => {
+    return document.documentElement.getAttribute(name);
+  };
 
 /**
  * Run through list of PolyFills to install if needed.
@@ -549,9 +552,12 @@ export function enQueue(func, milliseconds = 0) {
  */
 export class PurePWA {
   #settings;
+  #state;
 
   constructor(settings) {
     this.#settings = settings;
+
+    this.#state = createProxy(this, {});
 
     const appearanceSettings = PurePWA.detectAppearanceSettings();
     let savedAppearance =
@@ -568,13 +574,18 @@ export class PurePWA {
     this.#detectAnimationPreference();
 
     enQueue(this.#loadECMAScriptModules.bind(this));
-    enQueue(this.#cacheMPAInBackground.bind(this), 1000);
+    enQueue(
+      this.#cacheMPAInBackground.bind(this),
+      attr("data-url") === "/" ? 1 : 2000
+    );
 
     this.#handleMouseExceptions();
 
     enQueue(this.#registerServiceWorker.bind(this));
 
     document.body.style.visibility = "visible" /* fix for ISSUE 1  */;
+
+    this.localizeDocumentText();
   }
 
   #handleMouseExceptions() {
@@ -589,7 +600,7 @@ export class PurePWA {
           event.target.closest("header h1, header h2")
         ) {
           /* Click on title area -> HOME */
-          window.location = "/";
+          window.location = "/home/";
         }
       },
       false
@@ -720,7 +731,7 @@ export class PurePWA {
   }
 
   get appearance() {
-    return document.documentElement.getAttribute("data-appearance");
+    return attr("data-appearance");
   }
 
   set appearance(value) {
@@ -736,19 +747,135 @@ export class PurePWA {
 
   get colorScheme() {
     return (
-      document.documentElement.getAttribute("data-color-scheme") ||
-      PurePWA.detectAppearanceSettings().theme
+      attr("data-color-scheme") || PurePWA.detectAppearanceSettings().theme
     );
   }
 
   get useAnimations() {
-    return document.documentElement.getAttribute("data-use-animations") !== "0";
+    return attr("data-use-animations") !== "0";
   }
 
   set useAnimations(value) {
     value = value ? "1" : "0";
     document.documentElement.setAttribute("data-use-animations", value);
     localStorage.setItem("use-animations", value);
+  }
+
+  get theme() {
+    return localStorage.getItem("theme") || "pure";
+  }
+
+  set theme(value) {
+    document.documentElement.setAttribute("data-theme", value);
+    localStorage.setItem("theme", value);
+  }
+
+  /**
+   * Get stored/default language
+   */
+  get language() {
+    return (
+      localStorage.getItem("language") ||
+      navigator?.language?.split("-")[0] ||
+      "en"
+    );
+  }
+
+  set language(value) {
+    document.documentElement.setAttribute("lang", value);
+    localStorage.setItem("language", value);
+  }
+
+  localizeDocumentText() {
+    const textFilter = (node) => {
+      return node.nodeType === Node.TEXT_NODE
+        ? NodeFilter.FILTER_ACCEPT
+        : NodeFilter.FILTER_SKIP;
+    };
+
+    const iterator = document.createNodeIterator(
+      document.body,
+      NodeFilter.SHOW_TEXT,
+      textFilter
+    );
+    let node = iterator.nextNode();
+
+    while (node) {
+      let parent = node.parentElement;
+      let text = node.nodeValue.trim();
+
+      if (text.length > 1 && !["SCRIPT"].includes(parent.nodeName)) {
+        let translation = this.localizeString(text);
+
+        if (translation && translation !== text) {
+          node.nodeValue = translation;
+          parent.setAttribute("data-translated-from", text); // no need to escape since these are #text nodes.
+        } else {
+          console.log("◩", text); // TO BE TRANSLATED
+        }
+      }
+      node = iterator.nextNode();
+    }
+
+    ["placeholder", "title"].forEach((attributeName) => {
+      document.body
+        .querySelectorAll(`[${attributeName}]`)
+        .forEach((placeholderElement) => {
+          let text = placeholderElement.getAttribute(attributeName);
+          let translation = this.localizeString(text);
+          if (translation && translation !== text) {
+            placeholderElement.setAttribute(attributeName, translation);
+            placeholderElement.setAttribute(
+              `data-${attributeName}-translated-from`,
+              text
+            ); // no need to escape since these are #text nodes.
+          }
+        });
+    });
+
+    this.listenForTextualChanges(); // now make sure we keep track of changes
+  }
+
+  /**
+   * Uses MutationObserver to check for text node changes.
+   */
+  listenForTextualChanges() {
+    // Select the node that will be observed for mutations
+    const targetNode = document;
+
+    // Options for the observer (which mutations to observe)
+    const config = {
+      attributes: true,
+      childList: true,
+      characterData: true, // This is the key option to observe text changes
+      subtree: true // Observe changes in the descendants of the target node
+    };
+
+    // Callback function to execute when mutations are observed
+    const callback = function (mutationsList, observer) {
+      for (let mutation of mutationsList) {
+        if (mutation.type === "characterData") {
+          //console.log("Text content changed:", mutation.target.textContent);
+          //TODO: implement changes
+        }
+      }
+    };
+
+    // Create an observer instance linked to the callback function
+    const observer = new MutationObserver(callback);
+
+    // Start observing the target node for configured mutations
+    observer.observe(targetNode, config);
+  }
+
+  /**
+   * Translates given string in current locale/language.
+   * @param {*} text
+   * @returns
+   */
+  localizeString(text) {
+    const s = this.#settings.localization?.strings[text];
+    return s && s[this.language] ? s[this.language] : text;
   }
 
   /**
@@ -800,7 +927,7 @@ export class PurePWA {
   }
 
   getPageSettings() {
-    const url = document.documentElement.getAttribute("data-url");
+    const url = attr("data-url");
     return { url: url, ...(this.#settings.routes[url] || {}) };
   }
 
@@ -828,7 +955,7 @@ export class PurePWA {
 
   startViewTransition(callback) {
     if (
-      document.documentElement.getAttribute("data-use-animations") === "1" &&
+      attr("data-use-animations") === "1" &&
       "startViewTransition" in document
     )
       return document.startViewTransition(callback);
@@ -894,5 +1021,40 @@ export class HTMLBuilder {
     if (this.#container.length) return this.#container.replace("{html}", html);
 
     return html;
+  }
+}
+
+export class MarkdownLite {
+  constructor() {
+    this.rules = [
+      {
+        name: "paragraph",
+        pattern: /(?:\n\n|^)([^\n]+(?:\n[^\n]+)*)(?=\n\n|$)/g,
+        replacement: "<p>$1</p>"
+      },
+      {
+        name: "emphasis",
+        pattern: /\*([^\n]+)\*/g,
+        replacement: "<em>$1</em>"
+      },
+      {
+        name: "strong",
+        pattern: /__([^\n]+)\__/g,
+        replacement: "<strong>$1</strong>"
+      },
+      {
+        name: "url",
+        pattern: /\[([^\]]+)\]\((https?:\/\/[^\s]+)\)/g,
+        replacement: '<a rel="noopener" target="_blank" href="$2">$1</a>'
+      }
+    ];
+  }
+
+  render(raw) {
+    let result = raw;
+    this.rules.forEach((rule) => {
+      result = result.replace(rule.pattern, rule.replacement);
+    });
+    return result;
   }
 }

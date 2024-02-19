@@ -16,7 +16,9 @@ export const APP_SETTINGS = {
     "dropdown-list",
     "accordion-details",
     "range-switch",
-    "list-view"
+    "list-view",
+    "md-lite",
+    "localize-section"
   ],
 
   /**
@@ -25,7 +27,7 @@ export const APP_SETTINGS = {
   appMenu: [
     {
       name: "Home",
-      route: "/",
+      route: "/home/",
       icon: "home"
     },
     {
@@ -36,7 +38,7 @@ export const APP_SETTINGS = {
       route: "/settings/",
       icon: "settings",
       tooltip: "App settings"
-    }    
+    }
   ],
 
   /**
@@ -89,5 +91,127 @@ export const APP_SETTINGS = {
       }
     },
     "/settings/": {}
-  }
+  },
+
+  localization: {
+    defaultLanguage: "en",
+    strings: {
+      "Power & Purity": {
+        nl: "Kracht & Puurheid"
+      },
+      Power: {
+        nl: "Kracht"
+      },
+      Purity: {
+        nl: "Puurheid"
+      },
+      Beauty: {
+        nl: "Schoonheid"
+      },
+      Action: {
+        nl: "Actie"
+      },
+      Entry: {
+        nl: "Invoer"
+      },
+      Settings: {
+        nl: "Instellingen"
+      },
+      "Configure App": {
+        nl: "App Instellen"
+      },
+      System: {
+        nl: "Systeem"
+      },
+      Dark: {
+        nl: "Donker"
+      },
+      Light: {
+        nl: "Licht"
+      },
+      Appearance: {
+        nl: "Uiterlijk"
+      },
+      Animation: {
+        nl: "Animatie"
+      },
+      Theme: {
+        nl: "Thema"
+      },
+      Localization: {
+        nl: "Localisatie"
+      },
+      "UI Language": {
+        nl: "UI Taal"
+      },
+      "Describe new task...": {
+        nl: "Beschrijf nieuwe taak"
+      },
+      "Add task": {
+        nl: "Voeg taak toe"
+      },
+      "Current tasks:": {
+        nl: "Huidige taken:"
+      },
+      "Little a PWA can't Do...": {
+        nl: "Een PWA kan bijna alles..."
+      },
+      About: {
+        nl: "Over"
+      },
+      "You want pretty?": {
+        nl: "Je wilt mooi?"
+      },
+      "Handling APIs": {
+        nl: "API's afhandelen"
+      },
+      "State Management": {
+        nl: "State Beheer"
+      },
+      "Data Entry": {
+        nl: "Invoer"
+      },
+      "Forms & Controls": {
+        nl: "Formuliervelden"
+      },
+      "Sign up": {
+        nl: "Aanmelden"
+      },
+      "Enter email address": {
+        nl: "Voer emailadres in"
+      },
+      "Enter screen name": {
+        nl: "Voer schermnaam in"
+      },
+      Language: {
+        nl: "Taal"
+      },
+      Birthdate: {
+        nl: "Geboortedatum"
+      },
+      Name: {
+        nl: "Naam"
+      },
+      Continue: {
+        nl: "Ga door"
+      },
+      Cancel: {
+        nl: "Afbreken"
+      },
+      "Purity Matters": {
+        nl: "Puurheid telt"
+      },
+      "Pure Modern Web": {
+        nl: "Puur Modern Web"
+      },
+      "The PurePWA radical nothing-but-web-standards approach has nothing but advantages":
+        {
+          nl: "De PurePWA radicale niets-dan-web-standaarden aanpak heeft alleen maar voordelen"
+        },
+      "Invite someone": {
+        nl: "Nodig iemand uit"
+      }
+    }
+  },
+  language: "nl"
 };

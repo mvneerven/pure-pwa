@@ -47,7 +47,7 @@ customElements.define(
             item.name
           }">
               <svg-icon icon="${item.icon}" color></svg-icon>
-              <span>${item.name}</span>
+              <span>${purePWA.localizeString(item.name)}</span>
             </a>
           `;
       }
