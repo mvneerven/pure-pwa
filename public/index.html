@@ -15,7 +15,7 @@
   <link rel="manifest" href="/manifest.webmanifest" />
   <script type="module">
     const htmlEl = document.documentElement;
-    htmlEl.style.backgroundColor = htmlEl.getAttribute("data-color-scheme") === "dark" ? "#121212" : "#dddddd"
+    htmlEl.style.backgroundColor = window.matchMedia("(prefers-color-scheme: dark)").matches ? "#121212" : "#dddddd"
 
     requestAnimationFrame(() => {
       setTimeout(() => {
@@ -29,14 +29,30 @@
     });
 
   </script>
+
   <style>
+    :root {
+      --r: 221;
+      --g: 221;
+      --b: 221;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --r: 18;
+        --g: 18;
+        --b: 18;
+      }
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
-    html, body{
+    html,
+    body {
       width: 100%;
       height: 100vh;
       overflow: hidden;
@@ -53,35 +69,90 @@
       display: none !important
     }
 
-    .progress {
-      border-radius: 5px;
-      max-width: 300px;
-      background-size: 23em 0.25em;
-      height: 10px;
-      background-color: #fb8836;
-      animation: cssload-width .8s cubic-bezier(0.45, 0, 1, 1);
+    .heart-rate {
+
+      width: 100%;
+      min-width: 300px;
+      height: 500px;
+      position: relative;
+      margin: 20px auto;
     }
 
-    @keyframes cssload-width {
+    .heart-rate svg {
+      enable-background: new 0 0 1366 800;
+    }
 
-      0%,
-      100% {
-        transition-timing-function: cubic-bezier(1, 0, 0.65, 0.85);
+    .st0 {
+      fill: #F15E22;
+    }
+
+    .fade-in {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(var(--r), var(--g), var(--b), 1);
+      top: 0;
+      right: 0;
+      animation: heartRateIn 1.5s linear infinite;
+    }
+
+    .fade-out {
+      position: absolute;
+      width: 120%;
+      height: 100%;
+      top: 0;
+
+      animation: heartRateOut 1.5s linear infinite;
+      background: rgba(0, 0, 0, 1);
+      background: linear-gradient(to right, rgba(var(--r), var(--g), var(--b), 1) 0%, rgba(var(--r), var(--g), var(--b), 1) 80%, rgba(var(--r), var(--g), var(--b), 0) 100%);
+    }
+
+    @keyframes heartRateIn {
+      0% {
+        width: 100%;
       }
 
-      0% {
+      50% {
         width: 0;
       }
 
       100% {
-        width: 50%;
+        width: 0;
+      }
+    }
+
+    @keyframes heartRateOut {
+      0% {
+        left: -120%;
+      }
+
+      30% {
+        left: -120%;
+      }
+
+      100% {
+        left: 0;
       }
     }
   </style>
 </head>
 
 <body>
-  <div class="progress"></div>
+  <div class="heart-rate">
+    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+      x="0px" y="0px" width="80%" height="500px" viewBox="0 0 1366 800" xml:space="preserve">
+
+      <g>
+        <circle class="st0" cx="171.5" cy="391.4" r="9" />
+        <polygon class="st0" points="1040.9,523.1 1056,326.9 1067.6,396.2 1084.7,385.9 1099.6,394.9 1112.7,387 1130.1,449.9 
+      1145.2,359.1 1157,394.4 1203.8,394.4 1203.8,388.4 1161.3,388.4 1143.3,334.3 1128.6,422.2 1116.3,377.8 1099.6,387.9 
+      1084.7,378.9 1072,386.5 1053.8,277.2 1039.1,468.1 1027.7,388.4 167,388.4 167,394.4 1022.5,394.4 	" />
+      </g>
+    </svg>
+
+    <div class="fade-in"></div>
+    <div class="fade-out"></div>
+  </div>
 </body>
 
 </html>

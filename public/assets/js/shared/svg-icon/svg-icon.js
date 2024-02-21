@@ -21,7 +21,7 @@ customElements.define(
 
     render() {
       return /*html*/ `<svg class="icon" xmlns="http://www.w3.org/2000/svg">
-        <use id="use" href="/assets/img/icons.svg#${this.getAttribute(
+        <use href="/assets/img/icons.svg#${this.getAttribute(
           "icon"
         )}" />
       </svg>`;

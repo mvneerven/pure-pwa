@@ -616,8 +616,8 @@ export class PurePWA {
 
     const serviceWorkerNotification = parseHTML(
       /*html*/
-      `<div title="Click to install new App version." id="sw-notification" >
-          <a id="reload"><svg-icon icon="rocket"></svg-icon><span>Update available</span></a>
+      `<div title="${purePWA.localizeString("Click to install new App version")}." id="sw-notification" >
+          <a id="reload"><svg-icon icon="rocket"></svg-icon><span>${purePWA.localizeString("Install new version")}</span></a>
         </div>`
     )[0];
     serviceWorkerNotification.addEventListener("click", () => {

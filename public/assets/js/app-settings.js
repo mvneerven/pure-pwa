@@ -210,6 +210,12 @@ export const APP_SETTINGS = {
         },
       "Invite someone": {
         nl: "Nodig iemand uit"
+      },
+      "Install new version": {
+        nl: "Installeer nieuwe versie"
+      },
+      "Click to install new App version": {
+        nl: "Klik om nieuwe App versie te installeren"
       }
     }
   },

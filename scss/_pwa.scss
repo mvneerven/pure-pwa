@@ -58,7 +58,7 @@
     padding: .2rem .5rem;
     background-color: var(--color-surface-400);
     box-shadow: var(--box-shadow);
-    color: var(--color-accent);
+    color: var(--color-primary-000);
     border-radius: .5rem;
 
     >span {
@@ -68,7 +68,7 @@
     }
 
     >svg-icon {
-      --icon-fill: var(--color-accent);
+      --icon-fill: var(--color-primary-000);
       display: inline-block;
     }
   }

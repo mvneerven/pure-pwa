@@ -20,6 +20,11 @@
   --color-surface-500: #ececec;
   --color-surface-600: #f0f0f0;
 
+  --color-surface-base-r: 255;
+  --color-surface-base-g: 255;
+  --color-surface-base-b: 255;
+
+
   /** CSS LIGHT THEME MIXED SURFACE COLORS */
   --color-surface-mixed-000: #d2d2d2;
   --color-surface-mixed-100: #a8a8a8;
@@ -56,6 +61,10 @@
     --color-surface-400: #575757;
     --color-surface-500: #717171;
     --color-surface-600: #8b8b8b;
+
+    --color-surface-base-r: 0;
+    --color-surface-base-g: 0;
+    --color-surface-base-b: 0;
 
     /** CSS DARK THEME MIXED SURFACE COLORS */
     --color-surface-mixed-000: #282828;
