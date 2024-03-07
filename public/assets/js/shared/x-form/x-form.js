@@ -1,4 +1,9 @@
-import { CustomElement, parseHTML, toCamelCase } from "../../common.js";
+import {
+  CustomElement,
+  parseHTML,
+  toCamelCase,
+  sanitizeString
+} from "../../common.js";
 
 customElements.define(
   "x-form",
@@ -25,7 +30,10 @@ customElements.define(
       this.form.addEventListener("submit", (e) => {
         e.preventDefault();
         const data = new FormData(this.form);
-        this.state["x-form-data"] = Object.fromEntries(data);
+
+        this.state["x-form-data"] = Object.fromEntries(
+          XForm.sanitizeFormData(data)
+        );
         this.dispatchEvent(
           new CustomEvent("x-form-change", {
             detail: {
@@ -55,6 +63,16 @@ customElements.define(
       this.checkDebug();
 
       setTimeout(() => this.select.apply(this), 0);
+    }
+    
+    static sanitizeFormData(formData) {
+      const sanitizedFormData = new FormData();
+      for (let [key, value] of formData.entries()) {
+        if (typeof value === "string")
+          sanitizedFormData.append(key, sanitizeString(value));
+        else sanitizedFormData.append(key, value);
+      }
+      return sanitizedFormData;
     }
 
     checkDebug() {

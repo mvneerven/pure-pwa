@@ -8,14 +8,14 @@ accordion-details {
     font-weight: 800;
   }
 
-  ul {
-    margin-top: 2rem;
-    padding: 0;
-    list-style: none;
+  // ul {
+  //   margin-top: 2rem;
+  //   padding: 0;
+  //   list-style: none;
 
-    li {
-      list-style: none;
-      margin-bottom: 0rem;
+  //   li {
+  //     list-style: none;
+  //     margin-bottom: 0rem;
 
       details {
         cursor: pointer;
@@ -50,8 +50,8 @@ accordion-details {
         }
 
       }
-    }
-  }
+  //  }
+  //}
 }
 
 

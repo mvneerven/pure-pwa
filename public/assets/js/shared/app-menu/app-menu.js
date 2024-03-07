@@ -153,17 +153,13 @@ customElements.define(
 
     autoHide() {
       let lastScrollTop;
-
-      let navbar = document.getElementById("app-menu"); // Get The NavBar
-
+      const htmlElement = document.documentElement;
       const appElement = document.querySelector(".app-container");
       appElement.addEventListener(
         "scroll",
         debounce((e) => {
           let scrollTop = window.pageYOffset || appElement.scrollTop;
-
-          navbar.classList.toggle("hide", scrollTop > lastScrollTop);
-
+          htmlElement.classList.toggle("hide-app-menu", scrollTop > lastScrollTop);
           lastScrollTop = scrollTop;
         })
       );

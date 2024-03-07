@@ -1,6 +1,6 @@
 const app = {
   name: "pure-pwa",
-  version: "0.1.5",
+  version: "0.1.9",
   files: [
     "/about/index.html",
     "/action/domain/tmdb.js",

@@ -20,6 +20,7 @@ customElements.define(
 
         if (e.detail.name === "x-form-data") {
           const value = e.detail.value;
+
           if (newTaskSubmitted(value)) {
             // User has submitted the form with a new task
             this.state.todos.push({

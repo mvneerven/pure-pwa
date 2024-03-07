@@ -12,6 +12,8 @@
 @import "../public/assets/js/shared/range-switch/index";
 @import "../public/assets/js/shared/svg-icon/index";
 @import "../public/assets/js/shared/list-view/index";
+@import "../public/assets/js/shared/tab-strip/index";
+@import "../public/assets/js/shared/input-autocomplete/index";
 @import "../public/home/index";
 @import "../public/about/index";
 @import "../public/power/index";
@@ -31,7 +33,7 @@
 
 html {
   user-select: none;
-  height: 100vh;
+  //height: 100vh;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background: var(--color-surface-100);
@@ -41,6 +43,10 @@ html {
 
   color: var(--color-primary-100);
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  overflow: hidden;
+  scroll-behavior: smooth;
+  position: relative;
+  height: 100vh;
 }
 
 body {
@@ -185,6 +191,12 @@ em {
 h2 {
   margin-top: 1rem;
   margin-bottom: .5rem;
+}
+
+li {
+  small {
+    display: block;
+  }
 }
 
 article {

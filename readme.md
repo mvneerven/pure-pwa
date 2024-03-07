@@ -479,6 +479,30 @@ Of course, you'll then remove the `about`, `purity`, `flow`, `entry`, `action` a
 
 # New In
 
+## 0.1.6
+
+### `CustomElement.on` changes
+
+`on(eventNames, funcOrObject)`
+
+- `eventNames`: Attaches one or more event listeners. Space-separated.
+- `funcOrObject`: function, or object with selectors as keys and functions as values.
+
+
+Example:
+```js
+rendered() {
+  this.on("mousedown touchstart", {
+    ".next": (e) => {
+      // do something on button.next click
+    },
+    ".prev": (e) => {
+      // do something on button.prev click
+    }
+  });
+}
+```
+
 ## 0.1.0
 
 - Added a custom Splash screen (all other pages, including `/home/`, are now in their own folder)

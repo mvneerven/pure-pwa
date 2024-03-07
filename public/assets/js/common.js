@@ -1,7 +1,15 @@
-/**
- * List of PolyFills to check for
- */
-const POLYFILLS = {
+const sanitizationMap = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#x27;",
+    "/": "&#x2F;"
+  },
+  POLYFILLS = {
+    /**
+     * List of PolyFills to check for
+     */
     navigation: {
       isNeeded: () => {
         return (
@@ -171,33 +179,6 @@ export const debounce = (func) => {
 };
 
 /**
- * Sets a location hash to allow returning to previous state
- * when the browser Back button is clicked.
- * @param {String} hash the hash to set
- * @param {Function} setState function to call initially, linked to the hash
- * @param {Function} restoreState function to call when the hash changes again
- */
-export function hookHashChange(hash, setState, restoreState) {
-  // The window.location.hash setter works async,
-  // so we have to hook on hash change once initially
-  window.addEventListener(
-    "hashchange",
-    () => {
-      setState();
-
-      // set the restore hook on the next hash change
-      window.addEventListener("hashchange", restoreState, {
-        once: true
-      });
-    },
-    {
-      once: true
-    }
-  );
-  window.location.hash = hash;
-}
-
-/**
  * @enum { Number }
  */
 export const CustomElementDOMType = {
@@ -284,8 +265,25 @@ export class CustomElement extends HTMLElement {
     }
   }
 
-  on(eventName, func) {
-    this.addEventListener(eventName, func);
+  /**
+   * Attaches one or more event listeners
+   * @param {String} eventNames - name(s) of the event to listen to, space-separated.
+   * @param {Event || Object} funcOrObject - function, or object with selectors as keys and functions as values.
+   */
+  on(eventNames, funcOrObject) {
+    eventNames.split(" ").forEach((eventName) => {
+      if (typeof funcOrObject === "function")
+        this.addEventListener(eventName, func);
+      else {
+        this.addEventListener(eventName, (e) => {
+          Object.keys(funcOrObject).forEach((selector) => {
+            if (e.target.closest(selector)) {
+              funcOrObject[selector].apply(this, [e]);
+            }
+          });
+        });
+      }
+    });
   }
 
   /**
@@ -533,10 +531,25 @@ export function hookEscapeKey(callback) {
   );
 }
 
+/**
+ * Converts a string to camelCase.
+ * @param {String} property
+ * @returns {String}
+ */
 export function toCamelCase(property) {
   return property.replace(/-([a-z])/g, function (match, letter) {
     return letter.toUpperCase();
   });
+}
+
+/**
+ * Sanitizes a string that comes from user input to avoid XSS attacks
+ * @param {String} str
+ * @returns {String}
+ */
+export function sanitizeString(str) {
+  const reg = /[&<>"'/]/gi;
+  return str.replace(reg, (match) => sanitizationMap[match]);
 }
 
 /**
@@ -583,9 +596,22 @@ export class PurePWA {
 
     enQueue(this.#registerServiceWorker.bind(this));
 
+    this.#setupResizeMonitor();
+
     document.body.style.visibility = "visible" /* fix for ISSUE 1  */;
 
     this.localizeDocumentText();
+  }
+
+  #setupResizeMonitor() {
+    const checkOrientation = () => {
+      document.documentElement.setAttribute(
+        "data-orientation",
+        window.innerWidth > window.innerHeight ? "landscape" : "portrait"
+      );
+    };
+    window.addEventListener("resize", debounce(checkOrientation));
+    checkOrientation();
   }
 
   #handleMouseExceptions() {
@@ -616,8 +642,12 @@ export class PurePWA {
 
     const serviceWorkerNotification = parseHTML(
       /*html*/
-      `<div title="${purePWA.localizeString("Click to install new App version")}." id="sw-notification" >
-          <a id="reload"><svg-icon icon="rocket"></svg-icon><span>${purePWA.localizeString("Install new version")}</span></a>
+      `<div title="${purePWA.localizeString(
+        "Click to install new App version"
+      )}." id="sw-notification" >
+          <a id="reload"><svg-icon icon="rocket"></svg-icon><span>${purePWA.localizeString(
+            "Install new version"
+          )}</span></a>
         </div>`
     )[0];
     serviceWorkerNotification.addEventListener("click", () => {
@@ -1057,4 +1087,20 @@ export class MarkdownLite {
     });
     return result;
   }
+}
+
+/**
+ * Checks whether the fiven string is a valid URL.
+ * @param {String} txt - the string to evaluate
+ * @returns Boolean indeicating whether the string is a URL.
+ */
+export function isUrl(txt) {
+  try {
+    if (typeof txt !== "string") return false;
+    if (txt.indexOf("\n") !== -1 || txt.indexOf(" ") !== -1) return false;
+    if (txt.startsWith("#/")) return false;
+    new URL(txt, window.location.origin);
+    return true;
+  } catch {}
+  return false;
 }

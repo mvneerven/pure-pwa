@@ -18,7 +18,9 @@ export const APP_SETTINGS = {
     "range-switch",
     "list-view",
     "md-lite",
-    "localize-section"
+    "localize-section",
+    "tab-strip",
+    "input-autocomplete"
   ],
 
   /**
@@ -70,7 +72,8 @@ export const APP_SETTINGS = {
       card: {
         index: 0,
         title: "Power"
-      }
+      },
+      tags: ["video"]
     },
     "/entry/": {
       card: {
